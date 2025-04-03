@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎨 BrushBox
 
-## Getting Started
+A modern web application for digital artists and creators.
 
-First, run the development server:
+## 🚀 Tech Stack
+
+### Frontend
+- ⚛️ Next.js 15 (React with Server Components)
+- 🎨 TailwindCSS with DaisyUI
+  - 🌈 Theme customization
+  - 🎭 Multiple theme support
+- 🌟 Framer Motion for animations
+- 📱 Fully responsive design
+
+### Backend
+- 🗄️ PocketBase
+  - 🔒 Type-safe with typed-pocketbase
+  - 🚀 Real-time subscriptions
+  - 🔑 Built-in authentication
+
+### Development Tools
+- 📘 TypeScript for type safety
+- 🛠️ ESLint & Prettier
+- 🧪 Testing with Jest & React Testing Library
+
+## 🏃‍♂️ Getting Started
 
 ```bash
+# Clone the repository
+git clone https://github.com/yourusername/brushbox.git
+
+# Install dependencies
+npm install
+
+# Start PocketBase server (make sure PocketBase is installed)
+./pocketbase serve
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 🏠 Dynamic Landing Page
+    - ✨ Service showcase and pricing
+    - 💫 Animated sections
+    - 🗣️ Customer testimonials
+- 📅 Smart Booking System
+    - 🕒 Real-time availability
+    - 📝 Custom booking forms
+    - ✅ Instant confirmations
+- 💼 Management Dashboard
+    - 👥 Customer profiles
+    - 📊 Booking analytics
+    - 💫 Service management
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## 🛠️ Environment Setup
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` file:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```env
+NEXT_PUBLIC_POCKETBASE_URL=http://127.0.0.1:8090
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📦 Project Structure
 
-## Deploy on Vercel
+```
+brushbox/
+├── app/           # Next.js app router
+├── components/    # React components
+├── hooks/         # Custom React hooks
+├── lib/           # Utility functions
+├── public/        # Static assets
+└── types/         # TypeScript types
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🤝 Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contributions are welcome! Please read our contributing guidelines before submitting a PR.
+
+## 📄 License
+
+MIT License - feel free to use this project for your own purposes!
