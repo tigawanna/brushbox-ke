@@ -2,7 +2,8 @@
 import { motion, AnimatePresence } from "motion/react";
 import { CurrentUser } from "./CurrentUser";
 import Link from "next/link";
-// import { ModeToggle } from "../theme/ThemeToggle";
+import { UsersResponse } from "@/lib/pb/pb-types";
+
 
 type Route = {
   name: string;
@@ -14,23 +15,19 @@ type DesktopNavProps = {
   routes: Route[];
   isScrolled: boolean;
   isHomePage?: boolean;
+  user?: UsersResponse;
 };
 
-// function scrollToPageHash(location: string) {
-//   const element = document.getElementById(location);
-//   if (element) {
-//     element.scrollIntoView({ behavior: "smooth" });
-//   }
-// }
 
-export function DesktopNav({ routes, isScrolled,isHomePage }: DesktopNavProps) {
+
+export function DesktopNav({ routes, isScrolled,isHomePage,user }: DesktopNavProps) {
   return (
     <div className="w-full mx-auto flex items-center justify-between">
       {isHomePage ? (
         <a
           href="#"
           className="text-primary font-heading text-xl md:text-2xl font-medium">
-          SAVANNA<span className="text-accent">INTERIORS</span>
+          Brushbox
         </a>
       ) : (
         <Link
@@ -56,7 +53,7 @@ export function DesktopNav({ routes, isScrolled,isHomePage }: DesktopNavProps) {
           </motion.a>
         ))}
         {/* <ModeToggle /> */}
-        <CurrentUser />
+        <CurrentUser user={user}/>
       </div>
     </div>
   );
@@ -67,9 +64,10 @@ type MobileNavProps = {
   isOpen: boolean;
   onItemClick: () => void;
   isHomePage?: boolean;
+  user?: UsersResponse;
 };
 
-export function MobileNav({ routes, onItemClick,isHomePage }: MobileNavProps) {
+export function MobileNav({ routes, onItemClick,isHomePage,user }: MobileNavProps) {
   return (
     <AnimatePresence>
       <div className="flex flex-col justify-center gap-4">
@@ -78,7 +76,7 @@ export function MobileNav({ routes, onItemClick,isHomePage }: MobileNavProps) {
             href="#"
             onClick={onItemClick}
             className="text-primary font-heading text-xl md:text-2xl font-medium">
-            SAVANNA<span className="text-accent">INTERIORS</span>
+            Brushbox
           </a>
         ) : (
           <Link
@@ -110,7 +108,7 @@ export function MobileNav({ routes, onItemClick,isHomePage }: MobileNavProps) {
         </motion.div>
         <div className="flex justify-evenly">
           {/* <ModeToggle /> */}
-          <CurrentUser />
+          <CurrentUser user={user} />
         </div>
       </div>
     </AnimatePresence>

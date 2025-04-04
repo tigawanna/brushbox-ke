@@ -1,5 +1,5 @@
 import { TypedPocketBase } from "@tigawanna/typed-pocketbase";
-import { Schema } from "./pb-types";
+import { Schema, UsersResponse } from "./pb-types";
 import { cookies } from "next/headers";
 
 export async function serverPBClient() {
@@ -7,7 +7,22 @@ export async function serverPBClient() {
   if (!process.env.NEXT_PUBLIC_PB_URL) {
     throw new Error("NEXT_PUBLIC_PB_URL environment variable is not set");
   }
+
   const serverPB = new TypedPocketBase<Schema>(process.env.NEXT_PUBLIC_PB_URL);
-  serverPB.authStore.loadFromCookie(authCookie?.value || "");
+  if (!authCookie) {
+    return serverPB;
+  }
+  
+  const cookiePayload = authCookie.value
+  const cookieString = `pb_auth=${cookiePayload}`;
+  console.log("cookieString ", cookieString);
+  serverPB.authStore.loadFromCookie(cookieString,"pb_auth");
   return serverPB;
 }
+
+export async function getServerCurrentUser( client?: TypedPocketBase<Schema>){
+    const pb = client||await serverPBClient();
+    const currentUser = await pb.authStore
+    return currentUser.record as UsersResponse
+}
+

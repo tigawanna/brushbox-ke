@@ -17,6 +17,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+    logging: {
+
+    fetches: {
+      hmrRefreshes: false,
+      
+    },
+  },
 
 };
 

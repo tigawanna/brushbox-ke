@@ -4,11 +4,13 @@ import { DesktopNav, MobileNav } from "./Navbars";
 import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { UsersResponse } from "@/lib/pb/pb-types";
+
 
 interface ResponsiveGenericToolbarProps {
   children: React.ReactNode;
-  isHomePage?:boolean;
+  isHomePage?: boolean;
+  user?: UsersResponse;
   links: {
     name: string;
     href: string;
@@ -16,7 +18,7 @@ interface ResponsiveGenericToolbarProps {
   }[];
 }
 
-export function ResponsiveGenericToolbar({ children, links,isHomePage }: ResponsiveGenericToolbarProps) {
+export function ResponsiveGenericToolbar({ children, links,isHomePage, user }: ResponsiveGenericToolbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const closeMobileMenu = () => {
@@ -73,7 +75,7 @@ export function ResponsiveGenericToolbar({ children, links,isHomePage }: Respons
           initial={{ y: -100 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.5 }}>
-          <DesktopNav isHomePage routes={links} isScrolled={isScrolled} />
+          <DesktopNav isHomePage={isHomePage} routes={links} isScrolled={isScrolled} user={user} />
         </motion.nav>
 
         {/* Page content here */}
@@ -85,7 +87,13 @@ export function ResponsiveGenericToolbar({ children, links,isHomePage }: Respons
           data-test="homepage-sidebar"
           className="menu min-h-full w-80 justify-between bg-base-200/70 p-4 pb-16">
           {/* Sidebar content here */}
-          <MobileNav isHomePage routes={links} isOpen onItemClick={() => closeMobileMenu()} />
+          <MobileNav
+            isHomePage={isHomePage}
+            routes={links}
+            user={user}
+            isOpen
+            onItemClick={() => closeMobileMenu()}
+          />
         </ul>
       </div>
     </div>

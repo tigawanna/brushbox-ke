@@ -20,11 +20,8 @@ export function OauthButton({ returnTo }: OauthButtonProps) {
         provider: "google",
       })
       .then((res) => {
-        console.log("res", res);
         if (res) {
-          document.cookie = `pb_auth=${JSON.stringify({
-            token: res.token,
-          })}; path=/; max-age=31536000; SameSite=None; Secure`;
+          document.cookie = `pb_auth=${JSON.stringify(res)}; path=/; max-age=31536000; SameSite=None; Secure`;
         }
         router.push(returnTo);
       });

@@ -1,5 +1,4 @@
 
-
 /**
  * This file was @generated using typed-pocketbase
  */
@@ -357,6 +356,7 @@ export interface UsersResponse extends AuthCollectionResponse {
 	verified: boolean;
 	name: string;
 	avatar: string;
+	phone: string;
 	created: string;
 	updated: string;
 }
@@ -368,6 +368,7 @@ export interface UsersCreate extends AuthCollectionCreate {
 	verified?: boolean;
 	name?: string;
 	avatar?: File | null;
+	phone?: string;
 	created?: string | Date;
 	updated?: string | Date;
 }
@@ -379,6 +380,7 @@ export interface UsersUpdate extends AuthCollectionUpdate {
 	verified?: boolean;
 	name?: string;
 	avatar?: File | null;
+	phone?: string;
 	created?: string | Date;
 	updated?: string | Date;
 }
@@ -390,7 +392,55 @@ export interface UsersCollection {
 	response: UsersResponse;
 	create: UsersCreate;
 	update: UsersUpdate;
-	relations: Record<string, never>;
+	relations: {
+		bookings_via_by: BookingsCollection[];
+	};
+}
+
+// ===== bookings block =====
+// ===== bookings =====
+
+export interface BookingsResponse extends BaseCollectionResponse {
+	collectionName: 'bookings';
+	id: string;
+	by: string;
+	service: '' | 'hair' | 'nails' | 'facial' | 'masage' | 'waxing' | 'other';
+	preferred_date: string;
+	special_requests: string;
+	created: string;
+	updated: string;
+}
+
+export interface BookingsCreate extends BaseCollectionCreate {
+	id?: string;
+	by?: string;
+	service?: '' | 'hair' | 'nails' | 'facial' | 'masage' | 'waxing' | 'other';
+	preferred_date?: string | Date;
+	special_requests?: string;
+	created?: string | Date;
+	updated?: string | Date;
+}
+
+export interface BookingsUpdate extends BaseCollectionUpdate {
+	id: string;
+	by?: string;
+	service?: '' | 'hair' | 'nails' | 'facial' | 'masage' | 'waxing' | 'other';
+	preferred_date?: string | Date;
+	special_requests?: string;
+	created?: string | Date;
+	updated?: string | Date;
+}
+
+export interface BookingsCollection {
+	type: 'base';
+	collectionId: string;
+	collectionName: 'bookings';
+	response: BookingsResponse;
+	create: BookingsCreate;
+	update: BookingsUpdate;
+	relations: {
+		by: UsersCollection;
+	};
 }
 
 // ===== Schema =====
@@ -402,4 +452,5 @@ export type Schema = {
 	_authOrigins: AuthOriginsCollection;
 	_superusers: SuperusersCollection;
 	users: UsersCollection;
+	bookings: BookingsCollection;
 }

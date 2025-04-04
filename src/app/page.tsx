@@ -7,18 +7,21 @@ import { ServicesSection } from "@/components/landing-page/ServicesSection";
 import { TestimonialsSection } from "@/components/landing-page/TestimonialsSection";
 import { ResponsiveGenericToolbar } from "@/components/shared/nav/ResponsiveGenericToolbar";
 import { homePageSections } from "@/components/shared/nav/routes";
+import { getServerCurrentUser } from "@/lib/pb/server-client";
 
-export default function Home() {
+
+export default async function Home() {
+  const currentUser = await getServerCurrentUser();
   return (
     <main className="flex min-h-screen flex-col w-full items-center">
-      <ResponsiveGenericToolbar links={homePageSections} isHomePage>
+      <ResponsiveGenericToolbar links={homePageSections} isHomePage user={currentUser}>
         <HeroSection />
         <ServicesSection />
         <HairStylesSection />
         <AboutSection />
         <TestimonialsSection />
-        <GallerySection/>
-        <BookingSection/>
+        <GallerySection />
+        <BookingSection />
       </ResponsiveGenericToolbar>
     </main>
   );
