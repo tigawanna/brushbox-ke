@@ -404,9 +404,11 @@ export interface BookingsResponse extends BaseCollectionResponse {
 	collectionName: 'bookings';
 	id: string;
 	by: string;
-	service: '' | 'hair' | 'nails' | 'facial' | 'masage' | 'waxing' | 'other';
+	preferred_name: string;
+	service: '' | 'hair' | 'nails' | 'facial' | 'massage' | 'waxing' | 'other';
 	preferred_date: string;
 	special_requests: string;
+	phone: string;
 	created: string;
 	updated: string;
 }
@@ -414,9 +416,11 @@ export interface BookingsResponse extends BaseCollectionResponse {
 export interface BookingsCreate extends BaseCollectionCreate {
 	id?: string;
 	by?: string;
-	service?: '' | 'hair' | 'nails' | 'facial' | 'masage' | 'waxing' | 'other';
+	preferred_name?: string;
+	service?: '' | 'hair' | 'nails' | 'facial' | 'massage' | 'waxing' | 'other';
 	preferred_date?: string | Date;
 	special_requests?: string;
+	phone?: string;
 	created?: string | Date;
 	updated?: string | Date;
 }
@@ -424,9 +428,11 @@ export interface BookingsCreate extends BaseCollectionCreate {
 export interface BookingsUpdate extends BaseCollectionUpdate {
 	id: string;
 	by?: string;
-	service?: '' | 'hair' | 'nails' | 'facial' | 'masage' | 'waxing' | 'other';
+	preferred_name?: string;
+	service?: '' | 'hair' | 'nails' | 'facial' | 'massage' | 'waxing' | 'other';
 	preferred_date?: string | Date;
 	special_requests?: string;
+	phone?: string;
 	created?: string | Date;
 	updated?: string | Date;
 }

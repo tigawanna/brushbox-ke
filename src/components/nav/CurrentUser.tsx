@@ -19,13 +19,34 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTransition } from "react";
 import { logoutUser } from "@/lib/pb/client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCustomMutation } from "@/hooks/use-cutom-mutation";
 
 interface CurrentUserProps {
   user?: UsersResponse;
 }
 
+export function BookAppointment({ user }: CurrentUserProps) {
+if (!user) {
+    const authUrl = `/auth?returnTo=/bookings`;
+    return (
+      <Link
+        href={authUrl}
+        className="flex gap-2 btn btn-primary btn-outline justify-center items-center">
+        Proceed to booking
+        <User className="size-" />
+      </Link>
+    );
+  }
+  return (
+    <Link
+      href={"/bookings"}
+      className="flex gap-2 btn btn-primary btn-outline justify-center items-center">
+      Proceed to booking
+      <User className="size-" />
+    </Link>
+  );
+}
 export function CurrentUser({ user }: CurrentUserProps) {
   // console.log(user);
   if (!user) {
