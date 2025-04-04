@@ -17,22 +17,23 @@ export default function SignInPage() {
           )}
         />
 
-        {/* Left side - decorative */}
-        <div className="relative md:w-1/2 flex items-center justify-center p-8 z-10">
-          <div className="relative w-80 h-80 md:w-96 md:h-96">
+        {/* Image - Mobile: Full background, Desktop: Left side */}
+        <div className="absolute inset-0 md:relative md:inset-auto md:w-1/2 md:z-10 z-10 md:flex md:items-center md:justify-center md:p-8">
+          <div className="w-full h-full md:w-96 md:h-96 relative">
             <Image
               src="/belle.png"
               alt="Brushbox Beauty"
               fill
-              className="object-contain drop-shadow-lg"
+              className="object-cover md:object-contain drop-shadow-lg opacity-30 md:opacity-100"
+              sizes="100vw, (min-width: 768px) 50vw"
               priority
             />
           </div>
         </div>
 
         {/* Right side - login form */}
-        <div className="relative md:w-1/2 flex items-center justify-center p-8 z-10">
-          <div className="max-w-md w-full space-y-8 p-8  backdrop-blur-sm rounded-xl shadow-xl border border-primary/10">
+        <div className="relative w-full md:w-1/2 flex items-center justify-center p-8 z-10">
+          <div className="max-w-md w-full space-y-8 p-8 backdrop-blur-sm rounded-xl shadow-xl border border-primary/10 bg-base-100/70">
             <div className="text-center">
               <h2 className="text-3xl font-bold text-base-content">Welcome Back</h2>
               <p className="mt-2 text-sm text-base-content/70">

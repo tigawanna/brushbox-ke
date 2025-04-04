@@ -1,5 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "motion/react";
+import { CurrentUser } from "./CurrentUser";
 // import { ModeToggle } from "../theme/ThemeToggle";
 
 type Route = {
@@ -38,6 +39,7 @@ export function DesktopNav({ routes, isScrolled }: DesktopNavProps) {
         </motion.a>
       ))}
       {/* <ModeToggle /> */}
+      <CurrentUser/>
     </div>
   );
 }
@@ -82,6 +84,7 @@ export function MobileNav({ routes, onItemClick }: MobileNavProps) {
         </motion.div>
         <div className="flex justify-evenly">
           {/* <ModeToggle /> */}
+          <CurrentUser />
         </div>
       </div>
     </AnimatePresence>
