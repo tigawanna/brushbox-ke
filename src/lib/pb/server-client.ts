@@ -15,7 +15,6 @@ export async function serverPBClient() {
   
   const cookiePayload = authCookie.value
   const cookieString = `pb_auth=${cookiePayload}`;
-  console.log("cookieString ", cookieString);
   serverPB.authStore.loadFromCookie(cookieString,"pb_auth");
   return serverPB;
 }

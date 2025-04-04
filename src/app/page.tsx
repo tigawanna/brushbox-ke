@@ -5,8 +5,8 @@ import { HairStylesSection } from "@/components/landing-page/HairStylesSection";
 import { HeroSection } from "@/components/landing-page/HeroSection";
 import { ServicesSection } from "@/components/landing-page/ServicesSection";
 import { TestimonialsSection } from "@/components/landing-page/TestimonialsSection";
-import { ResponsiveGenericToolbar } from "@/components/shared/nav/ResponsiveGenericToolbar";
-import { homePageSections } from "@/components/shared/nav/routes";
+import { ResponsiveGenericToolbar } from "@/components/nav/ResponsiveGenericToolbar";
+import { homePageSections } from "@/components/nav/routes";
 import { getServerCurrentUser } from "@/lib/pb/server-client";
 
 

@@ -1,4 +1,4 @@
-import { ResponsiveGenericToolbar } from "@/components/shared/nav/ResponsiveGenericToolbar";
+import { ResponsiveGenericToolbar } from "@/components/nav/ResponsiveGenericToolbar";
 
 import { getServerCurrentUser, serverPBClient } from "@/lib/pb/server-client";
 

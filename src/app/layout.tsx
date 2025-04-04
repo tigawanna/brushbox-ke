@@ -7,8 +7,8 @@ import "./globals.css";
 // import "@/view-transition/vertical-transition.css";
 
 import { Inter, Playfair_Display } from "next/font/google";
-import { FooterSection } from "@/components/shared/nav/FooterSection";
-import { TigawannaFooter } from "@/components/shared/nav/TigawannaFooter";
+import { FooterSection } from "@/components/nav/FooterSection";
+import { TigawannaFooter } from "@/components/nav/TigawannaFooter";
 
 
 const playfair = Playfair_Display({

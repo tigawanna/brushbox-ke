@@ -1,7 +1,7 @@
 import { OauthButton } from "./__components/OauthButton";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { ResponsiveGenericToolbar } from "@/components/shared/nav/ResponsiveGenericToolbar";
+import { ResponsiveGenericToolbar } from "@/components/nav/ResponsiveGenericToolbar";
 import { NextjsPageProps } from "@/lib/nextjs/types";
 
 type UserPageSearchParams = {

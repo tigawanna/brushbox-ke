@@ -8,3 +8,13 @@ if (!process.env.NEXT_PUBLIC_PB_URL) {
 export const clientPB = new TypedPocketBase<Schema>(process.env.NEXT_PUBLIC_PB_URL);
 
 
+export async function logoutUser() {
+  return await new Promise((resolve) => {
+    setTimeout(() => {
+      clientPB.authStore.clear();
+      document.cookie = `pb_auth=; path=/; max-age=0; SameSite=None; Secure`;
+      resolve(true);
+    }, 3000);
+  });
+}
+
