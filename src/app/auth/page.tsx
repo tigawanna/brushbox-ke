@@ -2,10 +2,18 @@ import { OauthButton } from "./__components/OauthButton";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { ResponsiveGenericToolbar } from "@/components/shared/nav/ResponsiveGenericToolbar";
+import { NextjsPageProps } from "@/lib/nextjs/types";
 
-export default function SignInPage() {
+type UserPageSearchParams = {
+  returnTo?: string;
+};
+
+export default async function SignInPage({
+  searchParams,
+}: NextjsPageProps<{}, UserPageSearchParams>) {
+  const { returnTo } = await searchParams;
   return (
-    <ResponsiveGenericToolbar>
+    <ResponsiveGenericToolbar links={[]}>
       <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-base-100 relative overflow-hidden">
         {/* Background pattern */}
         <div
@@ -42,7 +50,7 @@ export default function SignInPage() {
             </div>
 
             <div>
-              <OauthButton />
+              <OauthButton returnTo={returnTo??"/"} />
             </div>
 
             <div className="text-center mt-4">

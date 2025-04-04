@@ -2,14 +2,21 @@
 import { useState, useEffect } from "react";
 import { DesktopNav, MobileNav } from "./Navbars";
 import { motion } from "motion/react";
-import { homePageSections } from "./routes";
+
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface ResponsiveGenericToolbarProps {
   children: React.ReactNode;
+  isHomePage?:boolean;
+  links: {
+    name: string;
+    href: string;
+    icon: React.ReactNode;
+  }[];
 }
 
-export function ResponsiveGenericToolbar({ children }: ResponsiveGenericToolbarProps) {
+export function ResponsiveGenericToolbar({ children, links,isHomePage }: ResponsiveGenericToolbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const closeMobileMenu = () => {
@@ -66,19 +73,11 @@ export function ResponsiveGenericToolbar({ children }: ResponsiveGenericToolbarP
           initial={{ y: -100 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.5 }}>
-          <div className="w-full mx-auto flex items-center justify-between">
-            <a
-              href="#"
-              className="text-primary p-2 font-heading rounded-4xl text-xl md:text-3xl font-medium">
-              Brushbox
-            </a>
-            <DesktopNav routes={homePageSections} isScrolled={isScrolled} />
-          </div>
+          <DesktopNav isHomePage routes={links} isScrolled={isScrolled} />
         </motion.nav>
 
         {/* Page content here */}
         {children}
-
       </div>
       <div className="drawer-side z-50">
         <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
@@ -86,7 +85,7 @@ export function ResponsiveGenericToolbar({ children }: ResponsiveGenericToolbarP
           data-test="homepage-sidebar"
           className="menu min-h-full w-80 justify-between bg-base-200/70 p-4 pb-16">
           {/* Sidebar content here */}
-          <MobileNav routes={homePageSections} isOpen onItemClick={() => closeMobileMenu()} />
+          <MobileNav isHomePage routes={links} isOpen onItemClick={() => closeMobileMenu()} />
         </ul>
       </div>
     </div>

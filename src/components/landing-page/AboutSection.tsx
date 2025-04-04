@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export function AboutSection(){
 return (
-    <section id="about" className="section-padding bg-black relative">
+    <section id="about" className="section-padding  relative">
       {/* Gold accent elements */}
       <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-primary /5 blur-3xl"></div>
       <div className="absolute bottom-20 left-10 w-40 h-40 rounded-full bg-primary /5 blur-3xl"></div>
