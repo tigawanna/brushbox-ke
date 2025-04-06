@@ -21,7 +21,7 @@ export default async function Home() {
         <AboutSection />
         <TestimonialsSection />
         <GallerySection />
-        <BookingSection />
+        <BookingSection user={currentUser}/>
       </ResponsiveGenericToolbar>
     </main>
   );
