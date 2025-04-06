@@ -1,6 +1,6 @@
 "use client"
 
-import { BookingsResponse, UsersResponse, BookingsCreate } from "@/lib/pb/pb-types";
+import { UsersResponse, BookingsCreate } from "@/lib/pb/pb-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,6 +22,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useCustomMutation } from "@/hooks/use-cutom-mutation";
+import { clientPB } from "@/lib/pb/client";
+import { Loader } from "lucide-react";
+import { makeHotToast } from "@/components/shared/toasters";
 
 const servicesList = [
   "hair",
@@ -58,13 +62,44 @@ export function BookingSectionForm({ user }: BookingSectionFormProps) {
       special_requests: "",
     },
   });
+const {isPending,mutate} = useCustomMutation({
+  mutationFn: async ({variables}:{variables:BookingsCreate}) => {
+    return clientPB.from("bookings").create(variables);
+  },
+  onSuccess(data) {
+    makeHotToast({
+      title: "Booking Successful",
+      description: "Your appointment has been booked successfully. Confirmation will be sent to your email.",
+      variant: "success",
+    })
+  },
+  onError(error) {
+    makeHotToast({
+      title: "Booking Failed",
+      description: error.message,
+      variant: "error",
+      duration: 10000,
+    })
+  },
 
+})
   // Handle form submission
   function onSubmit(data: BookingFormValues) {
-    console.log(data);
+    // console.log(data);
+    mutate({
+      variables: {
+        by: user.id,
+        preferred_name: data.preferred_name,
+        phone: data.phone,
+        service: data.service,
+        preferred_date: data.preferred_date,
+        special_requests: data.special_requests,
+      },
+    })
+    
     // Here you would typically send the data to your Pocketbase backend
   }
-
+// console.log("=== error ===",error);
   return (
     <div className="p-2 h-full  rounded-lg ">
       {/* <h3 className="text-2xl font-serif font-semibold mb-6">Request an Appointment</h3> */}
@@ -175,9 +210,10 @@ export function BookingSectionForm({ user }: BookingSectionFormProps) {
 
           <Button 
             type="submit" 
+            disabled={isPending}
             className="w-full bg-primary text-base-100 hover:bg-primary-focus"
           >
-            Book Appointment
+            Book Appointment {isPending && <Loader className="animate-spin ml-2" />}
           </Button>
         </form>
       </Form>

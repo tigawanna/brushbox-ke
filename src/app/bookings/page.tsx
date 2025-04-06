@@ -16,11 +16,11 @@ export default async function page({}: pageProps) {
   return (
     <ResponsiveGenericToolbar links={[]}>
       <div className="w-full mt-10 min-h-screen h-full flex flex-col  items-center ">
-      <BookingsDialog currentUser={currentUser} />
-        <div className="w-full h-full flex flex-col items-center justify-center">
-          <h3 className="text-primary text-xl max-w-xl lg:text-3xl font-bold mb-4 leading-tight">
+        <div className="w-full mt-10 h-full flex flex-col items-center ">
+          <h3 className="text-primary w-full sticky text-center top-20 text-xl lg:text-3xl font-bold mb-4 leading-tight">
             bookings
           </h3>
+      <BookingsDialog currentUser={currentUser} />
           {appointments.map((appointment) => (
             <div key={appointment.id} className="p-4 border border-base-300 rounded-lg mb-4">
               <p>{appointment.name}</p>

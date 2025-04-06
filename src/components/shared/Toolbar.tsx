@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ThemeToggle } from "../themes/ThemeToggle";
 import { MdOutlineDashboard } from "react-icons/md";
-import { ClientOnly } from "@/lib/nextjs/ClientSuspense";
+import { ClientOnly } from "@/lib/nextjs/ClientOnly";
 import { Hexagon } from "lucide-react";
 
 

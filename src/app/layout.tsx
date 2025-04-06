@@ -9,7 +9,7 @@ import "./globals.css";
 import { Inter, Playfair_Display } from "next/font/google";
 import { FooterSection } from "@/components/nav/FooterSection";
 import { TigawannaFooter } from "@/components/nav/TigawannaFooter";
-
+import { Toaster } from "react-hot-toast";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -34,6 +34,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <body className={`${playfair.variable} ${inter.variable}  antialiased  font-serif`}>
         {children}
         <FooterSection />
+        <Toaster reverseOrder />
         <TigawannaFooter />
       </body>
     </html>

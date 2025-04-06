@@ -3,7 +3,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { ViewTransitionSelect } from "@/components/themes/ViewTransitionSelect";
 import { AllDaisyUiThemes } from "@/components/themes/AllDaisyUiThemes";
 import { ThemeToggle } from "@/components/themes/ThemeToggle";
-import { ClientOnly } from "@/lib/nextjs/ClientSuspense";
+import { ClientOnly } from "@/lib/nextjs/ClientOnly";
 import { useEffect } from "react";
 
 interface DashboardThemeProps {}
