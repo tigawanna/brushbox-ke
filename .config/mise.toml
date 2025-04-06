@@ -1,0 +1,28 @@
+[env]
+NODE_ENV = "development"
+
+#[tools]
+#node = "20"
+
+# [tasks."docs:setup"]
+# run = "npm install"
+
+# [tasks."docs:dev"]
+# run = "node docs/index.js"
+# depends = ["docs:setup"]
+
+# [tasks."pocketbase:setup"]
+# run = "pocketbase install script..."
+
+[tasks."next:dev"]
+run = "pnpm run dev"
+[tasks."pb:dev"]
+run = "/home/dennis/Desktop/code/pb/brushbox/pocketbase serve"
+# depends = ["pocketbase:setup"]
+
+[tasks."dev"]
+run = "mise run pb:dev ::: next:dev"
+# [tasks."dev:all"]
+# run = "pnpm run dev && /home/dennis/Desktop/code/pb/brushbox/pocketbase serve"
+# [tasks."dev:all:setup"]
+# run = "pocketbase install script..."
