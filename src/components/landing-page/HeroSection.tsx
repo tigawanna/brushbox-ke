@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Icons } from "../icons/icons";
 import Image from "next/image";
+import { BookAppointment } from "../nav/CurrentUser";
 
 
 
@@ -27,7 +28,7 @@ return (
           </h1>
 
           <div className="flex justify-center md:justify-start">
-            <Icons.scissors className="w-8 h-8 md:w-12 md:h-12" />
+            <BookAppointment />
           </div>
         </div>
 

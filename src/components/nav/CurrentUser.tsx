@@ -21,6 +21,7 @@ import { useTransition } from "react";
 import { logoutUser } from "@/lib/pb/client";
 import { usePathname, useRouter } from "next/navigation";
 import { useCustomMutation } from "@/hooks/use-cutom-mutation";
+import { Icons } from "../icons/icons";
 
 interface CurrentUserProps {
   user?: UsersResponse;
@@ -28,22 +29,24 @@ interface CurrentUserProps {
 
 export function BookAppointment({ user }: CurrentUserProps) {
 if (!user) {
-    const authUrl = `/auth?returnTo=/bookings`;
+    const authUrl = `/auth?returnTo=/customer`;
     return (
       <Link
         href={authUrl}
-        className="flex gap-2 btn btn-primary btn-outline justify-center items-center">
+        className="flex gap-2 z-20 btn btn-primary btn-outline justify-center items-center">
+        <Icons.scissors className="size-6" />
         Proceed to booking
-        <User className="size-" />
+    
       </Link>
     );
   }
   return (
     <Link
-      href={"/bookings"}
-      className="flex gap-2 btn btn-primary btn-outline justify-center items-center">
+      href={"/customer"}
+      className="flex gap-2 z-20 btn btn-primary btn-outline justify-center items-center">
+      <Icons.scissors className="size-7" />
       Proceed to booking
-      <User className="size-" />
+
     </Link>
   );
 }

@@ -84,8 +84,8 @@ const {isPending,mutate} = useCustomMutation({
 
 })
   // Handle form submission
-  console.log(" current user == :", user);
   function onSubmit(data: BookingFormValues) {
+    // console.log(data);
     mutate({
       variables: {
         by: user.id,
