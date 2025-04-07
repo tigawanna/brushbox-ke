@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Clock, Phone, Calendar, MessageSquare } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { getFileURL } from "@/lib/pb/utils";
 
 
 
@@ -64,9 +65,7 @@ export function BookingCard({ booking }: BookingCardProps) {
   // Calculate time since last update
   const lastUpdated = formatDistance(new Date(booking.updated), new Date(), { addSuffix: true });
 
-  // console.log("preferred_date == ", new Date(booking.preferred_date));
-  // Get inspiration images for this service
-  const inspirationForService = booking.references
+  const lookReferences = booking.references as string[] | undefined; 
 
   return (
     <Card className="w-full overflow-hidden border-base-300 hover:border-primary/20 transition-all duration-300">
@@ -105,16 +104,20 @@ export function BookingCard({ booking }: BookingCardProps) {
           )}
 
           {/* Inspiration section */}
-          {dummyImages.length > 0 && (
+          {lookReferences&&lookReferences?.length > 0 && (
             <div className="mt-4">
               <h3 className="text-sm font-semibold mb-2">Style Inspiration</h3>
               <div className="flex flex-wrap  gap-2">
-                {dummyImages.map((image, index) => (
+                {lookReferences?.map((image, index) => (
                   <div
                     key={index}
                     className="relative w-full flex-grow md:w-[300px] max-h-[300px] aspect-square rounded-md overflow-hidden">
                     <Image
-                      src={image}
+                      src={getFileURL({
+                        collection_id_or_name: "bookings",
+                        record_id: booking.id,
+                        file_name: image,
+                      })}
                       alt={`${booking.preferred_name} inspiration ${index + 1}`}
                       // height={300}
                       // width={300}

@@ -29,23 +29,23 @@ interface CurrentUserProps {
 
 export function BookAppointment({ user }: CurrentUserProps) {
 if (!user) {
-    const authUrl = `/auth?returnTo=/customer`;
+    const authUrl = `/auth?returnTo=/booking`;
     return (
       <Link
         href={authUrl}
-        className="flex gap-2 z-20 btn btn-primary btn-outline justify-center items-center">
+        className="flex gap-2 z-20 btn btn-primary  justify-center items-center">
         <Icons.scissors className="size-6" />
-        Proceed to booking
+        Book and appointment
     
       </Link>
     );
   }
   return (
     <Link
-      href={"/customer"}
-      className="flex gap-2 z-20 btn btn-primary btn-outline justify-center items-center">
+      href={"/booking"}
+      className="flex gap-2 z-20 btn btn-primary  justify-center items-center">
       <Icons.scissors className="size-7" />
-      Proceed to booking
+      Book and appointment
 
     </Link>
   );

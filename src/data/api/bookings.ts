@@ -10,3 +10,13 @@ export async function getBookings(pb: TypedPocketBase<Schema>) {
     return [];
   }
 }
+export async function getLatestBookings(pb: TypedPocketBase<Schema>) {
+  try {
+    const bookings = await pb.from("bookings").getFirstListItem("")
+    return bookings;
+  } catch (error) {
+    console.log("Error fetching bookings:", error);
+    return [];
+  }
+}
+

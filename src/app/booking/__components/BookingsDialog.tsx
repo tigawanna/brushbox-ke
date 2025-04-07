@@ -3,14 +3,15 @@ import { DiaDrawer } from "@/components/shared/DiaDrawer";
 import { Plus } from "lucide-react";
 import { BookingSectionForm } from "./BookingSectionForm";
 import { useState } from "react";
-import { UsersResponse } from "@/lib/pb/pb-types";
+import { BookingsResponse, UsersResponse } from "@/lib/pb/pb-types";
 import { ClientOnly } from "@/lib/nextjs/ClientOnly";
 
 interface BookingsDialogProps {
   currentUser: UsersResponse;
+  booking?:BookingsResponse
 }
 
-export function BookingsDialog({ currentUser }: BookingsDialogProps) {
+export function BookingsDialog({ currentUser,booking }: BookingsDialogProps) {
   const [open, setOpen] = useState(false);
   return (
     <ClientOnly
@@ -31,7 +32,7 @@ export function BookingsDialog({ currentUser }: BookingsDialogProps) {
             Book an appointment
           </button>
         }>
-        <BookingSectionForm user={currentUser} />
+        <BookingSectionForm user={currentUser} booking={booking} />
       </DiaDrawer>
     </ClientOnly>
   );
