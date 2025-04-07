@@ -1,5 +1,5 @@
 {
-  "name": "github-dashboard-next",
+  "name": "brushbox",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,9 +8,7 @@
     "postbuild": "next-sitemap",
     "pb-types": "tsx src/lib/pb/cmd/gen-types.ts",
     "start": "next start",
-    "lint": "next lint",
-    "npm": "pnpm",
-    "relay": "relay-compiler"
+    "lint": "next lint"
   },
   "dependencies": {
     "@auth/core": "0.37.0",
