@@ -410,6 +410,7 @@ export interface BookingsResponse extends BaseCollectionResponse {
 	special_requests: string;
 	phone: string;
 	references: MaybeArray<string>;
+	status: '' | 'canceled' | 'rescheduled';
 	created: string;
 	updated: string;
 }
@@ -423,6 +424,7 @@ export interface BookingsCreate extends BaseCollectionCreate {
 	special_requests?: string;
 	phone?: string;
 	references?: MaybeArray<File>;
+	status?: '' | 'canceled' | 'rescheduled';
 	created?: string | Date;
 	updated?: string | Date;
 }
@@ -439,6 +441,7 @@ export interface BookingsUpdate extends BaseCollectionUpdate {
 	phone?: string;
 	references?: MaybeArray<File>;
 	'references-'?: string;
+	status?: '' | 'canceled' | 'rescheduled';
 	created?: string | Date;
 	updated?: string | Date;
 }

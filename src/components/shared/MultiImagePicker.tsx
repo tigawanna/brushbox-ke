@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 
 import { X } from "lucide-react"
@@ -5,56 +6,63 @@ import { useState, useEffect } from "react"
 import { motion } from "motion/react"
 
 interface MultiImagePickerProps {
-  images?: (string | Blob)[]
-  setImages?: (images: (string | Blob)[]) => void
-  setImageBlobs?: (blobs: File[]) => void
+  /**
+   * Array of File/Blob objects to display
+   */
+  images?: File[]
+  /**
+   * Callback to update the File/Blob array
+   */
+  setImages?: (images: File[]) => void
+  /**
+   * Maximum number of images allowed
+   */
   maxImages?: number
+  /**
+   * Optional CSS class names
+   */
   className?: string
+  /**
+   * File types to accept
+   */
   accept?: React.InputHTMLAttributes<HTMLInputElement>["accept"]
+  /**
+   * Allow multiple file selection
+   */
   multiple?: boolean
 }
 
 export function MultiImagePicker({
   images = [],
   setImages,
-  setImageBlobs,
   maxImages = 5,
   className = "",
   accept = "image/*",
   multiple = true,
 }: MultiImagePickerProps) {
   const [dragActive, setDragActive] = useState<boolean>(false)
-  const [fileObjects, setFileObjects] = useState<File[]>([])
   const [previewUrls, setPreviewUrls] = useState<string[]>([])
   
-  // Generate preview URLs from images (which can be strings or Blobs)
+  // Generate preview URLs from file/blob objects
   useEffect(() => {
     // Cleanup previous object URLs to prevent memory leaks
     const cleanup = () => {
       previewUrls.forEach(url => {
-        // Only revoke URLs that were created by createObjectURL (they start with "blob:")
         if (url.startsWith('blob:')) {
           URL.revokeObjectURL(url)
         }
       })
     }
     
-    const generatePreviews = async (): Promise<void> => {
-      const newPreviewUrls = await Promise.all(
-        images.map(image => {
-          if (typeof image === 'string') {
-            return image // Already a URL, just use it
-          } else if (image instanceof Blob) {
-            return URL.createObjectURL(image) // Create a URL for the Blob
-          }
-          return '' // Fallback for invalid inputs
-        })
-      )
-      
-      setPreviewUrls(newPreviewUrls.filter(url => url !== ''))
+    if(images.length > 0) {
+      const urls = images?.map(file => {
+        if (file instanceof Blob) {
+          return URL.createObjectURL(file)
+        }
+      }).filter(Boolean) as string[]
+      setPreviewUrls(urls)
+
     }
-    
-    generatePreviews()
     
     // Cleanup function to prevent memory leaks
     return cleanup
@@ -86,45 +94,24 @@ export function MultiImagePicker({
     const remainingSlots = maxImages - (images?.length || 0)
     if (remainingSlots <= 0) return
     
-    const files = Array.from(fileList).slice(0, remainingSlots)
+    const newFiles = Array.from(fileList)
+      .slice(0, remainingSlots)
+      .filter(file => file.type.startsWith('image/'))
     
-    // Update both the image objects and blob references
-    if (setImages) {
-      setImages([...images, ...files])
+    if (setImages && newFiles.length > 0) {
+      setImages([...images, ...newFiles])
     }
-    
-    // Update the file objects for upload separately
-    const updatedFileObjects = [...fileObjects, ...files]
-    setFileObjects(updatedFileObjects)
-    setImageBlobs?.(updatedFileObjects)
   }
   
   function removeImage(indexToRemove: number): void {
-    // Get the URL that's being removed
-    const urlToRemove = previewUrls[indexToRemove]
+    if (!setImages) return
     
-    // If it's a blob URL, revoke it to prevent memory leaks
-    if (urlToRemove && urlToRemove.startsWith('blob:')) {
-      URL.revokeObjectURL(urlToRemove)
-    }
-    
-    // Update the images array by removing the specific image
-    if (setImages) {
-      const updatedImages = [...images]
-      updatedImages.splice(indexToRemove, 1)
-      setImages(updatedImages)
-    }
-    
-    // Update file blobs array if needed
-    if (setImageBlobs) {
-      const updatedFileObjects = [...fileObjects]
-      updatedFileObjects.splice(indexToRemove, 1)
-      setFileObjects(updatedFileObjects)
-      setImageBlobs(updatedFileObjects)
-    }
+    const updatedImages = [...images]
+    updatedImages.splice(indexToRemove, 1)
+    setImages(updatedImages)
   }
   
-  const canAddMoreImages = !images || images.length < maxImages
+  const canAddMoreImages = images.length < maxImages
 
   return (
     <div className={`w-full flex flex-col items-center justify-center gap-4 ${className}`}>
@@ -142,7 +129,7 @@ export function MultiImagePicker({
               Drag and drop images here, or click to select
             </p>
             <p className="text-xs text-base-content/50 mb-4">
-              {images?.length || 0} of {maxImages} images
+              {images.length} of {maxImages} images
             </p>
             <label className="btn btn-primary btn-sm">
               <input

@@ -22,6 +22,9 @@ import { makeHotToast } from "@/components/shared/toasters";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { formatPBDate, getFileURL } from "@/lib/pb/utils";
 import { MultiImagePicker } from "@/components/shared/MultiImagePicker";
+import { PocketbaseImages } from "@/lib/pb/components/PocketbaseImages";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 // Define available services based on the BookingsCreate type
 const servicesList = [
@@ -35,8 +38,7 @@ const servicesList = [
 
 // Updated schema to match the new BookingsCreate interface
 
-
-const bookingFormSchema: z.ZodType<Omit<BookingsUpdate,"id">> = z.object({
+const bookingFormSchema: z.ZodType<Omit<BookingsUpdate, "id">> = z.object({
   preferred_name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   phone: z.string().min(10, { message: "Please enter a valid phone number." }),
   services: z.array(z.enum(servicesList)),
@@ -52,9 +54,14 @@ type BookingFormValues = z.infer<typeof bookingFormSchema>;
 interface BookingSectionFormProps {
   user: UsersResponse;
   booking?: BookingsResponse;
+  setOpen?: (open: boolean) => void;
 }
 
-export function BookingSectionForm({ user, booking }: BookingSectionFormProps) {
+export type CurrentImage = {
+  name: string;
+  action: "keep" | "delete";
+};
+export function BookingSectionForm({ user, booking,setOpen }: BookingSectionFormProps) {
   // Initialize the form with default values
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingFormSchema),
@@ -68,7 +75,12 @@ export function BookingSectionForm({ user, booking }: BookingSectionFormProps) {
       // "references-":[""]
     },
   });
-
+  const currentImages = booking?.references as string[] | undefined;
+  const currSavedImages = currentImages?.map((i) => {
+    return { name: i, action: "keep" } as const;
+  });
+  const [savedImages, setSavedImages] = useState<CurrentImage[] | undefined>(currSavedImages);
+  const router = useRouter();
   const { isPending, mutate } = useCustomMutation({
     mutationFn: async ({ variables }: { variables: BookingsCreate }) => {
       return clientPB.from("bookings").create(variables);
@@ -81,6 +93,8 @@ export function BookingSectionForm({ user, booking }: BookingSectionFormProps) {
         variant: "success",
       });
       form.reset();
+      router.refresh();
+      setOpen?.(false);
     },
     onError(error) {
       makeHotToast({
@@ -99,10 +113,12 @@ export function BookingSectionForm({ user, booking }: BookingSectionFormProps) {
       makeHotToast({
         title: "Booking Update Successful",
         description:
-          "Your appointment has been updated successfully. Confirmation will be sent to your email.",
+        "Your appointment has been updated successfully. Confirmation will be sent to your email.",
         variant: "success",
       });
       form.reset();
+      router.refresh();
+      setOpen?.(false);
     },
     onError(error) {
       console.log("Error updating booking:", error);
@@ -116,11 +132,13 @@ export function BookingSectionForm({ user, booking }: BookingSectionFormProps) {
   });
 
   function onSubmit(data: BookingFormValues): void {
-    console.log("Form submitted with data:", data);
     if (!data.preferred_date) {
       throw new Error("Please select a date and time.");
     }
     if (booking?.id) {
+      const imagesToBeDeleted = savedImages
+        ?.filter((image) => image.action === "delete")
+        .map((image) => image.name);
       updateMutation({
         variables: {
           id: booking.id,
@@ -130,7 +148,9 @@ export function BookingSectionForm({ user, booking }: BookingSectionFormProps) {
           services: data.services,
           preferred_date: formatPBDate(data.preferred_date),
           special_requests: data.special_requests,
-          references: data.references,
+          "references+": data.references,
+          // @ts-expect-error : this is supposed to take in an array insted of string
+          "references-": imagesToBeDeleted,
         },
       });
     } else {
@@ -239,34 +259,48 @@ export function BookingSectionForm({ user, booking }: BookingSectionFormProps) {
           />
           <FormField
             control={form.control}
+            name="references-"
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-base-content/70">
+                    Reference images
+                  </FormLabel>
+                  <FormControl>
+                    <PocketbaseImages
+                      imageNames={savedImages}
+                      setImageNames={setSavedImages}
+                      // setImagesToBeDeleted={setSavedImages}
+                      recordId={booking?.id || ""}
+                      collectionName="bookings"
+                      fieldName="references"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
+          />
+          <FormField
+            control={form.control}
             name="references"
             render={({ field }) => {
-              // const pocketbaseUrls = (field.value as string[]|undefined)?.map((file:File|string) => {
-              //   if (file instanceof File) {
-              //     return URL.createObjectURL(file);
-              //   }
-              //   return getFileURL({
-              //     collection_id_or_name: "bookings",
-              //     record_id: file.id,
-              //     file_name: file.name,
-              //   });
-              // });
-              return(
-              <FormItem>
-                <FormLabel className="text-sm font-medium text-base-content/70">
-                  Reference images
-                </FormLabel>
-                <FormControl>
-                  <MultiImagePicker
-                    images={field.value as string[] | undefined}
-                    setImages={field.onChange}
-                    accept="image/jpeg,image/png,image/webp,image/gif"
-
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}}
+              return (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-base-content/70">
+                    New Reference images
+                  </FormLabel>
+                  <FormControl>
+                    <MultiImagePicker
+                      images={field.value as File[] | undefined}
+                      setImages={field.onChange}
+                      accept="image/jpeg,image/png,image/webp,image/gif"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
           />
 
           <FormField
@@ -294,7 +328,8 @@ export function BookingSectionForm({ user, booking }: BookingSectionFormProps) {
             type="submit"
             disabled={isPending || updateMutationIspending}
             className="w-full bg-primary text-base-100 hover:bg-primary-focus">
-            Book Appointment {(isPending || updateMutationIspending) && <Loader className="animate-spin ml-2" />}
+            Book Appointment{" "}
+            {(isPending || updateMutationIspending) && <Loader className="animate-spin ml-2" />}
           </Button>
         </form>
       </Form>

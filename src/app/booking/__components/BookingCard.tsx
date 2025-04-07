@@ -9,41 +9,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Clock, Phone, Calendar, MessageSquare } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
+import { Clock, Phone, Calendar } from "lucide-react";
 import { getFileURL } from "@/lib/pb/utils";
 
 
 
-// Define inspiration images for each service type
-const fillerInspirationImages: Record<string, string[]> = {
-  "": [],
-  hair: [
-    "https://images.unsplash.com/photo-1562322140-8baeececf3df?w=400&h=300&auto=format",
-    "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=400&h=300&auto=format",
-  ],
-  nails: [
 
-    "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&h=300&auto=format",
-  ],
-  facial: [
-    "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=300&auto=format",
 
-  ],
-  massage: [
-    "https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=400&h=300&auto=format",
-    "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=400&h=300&auto=format",
-  ],
-
-  other: [
-    "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=300&auto=format",
-    "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=300&auto=format",
-  ],
-};
-
-const dummyImages = Object.values(fillerInspirationImages).flatMap((images) => images);
 interface BookingCardProps {
   booking: BookingsResponse;
 }
@@ -61,10 +33,8 @@ export function BookingCard({ booking }: BookingCardProps) {
 
   // Calculate time from now
   const timeAgo = formatDistance(new Date(booking.created), new Date(), { addSuffix: true });
-
   // Calculate time since last update
   const lastUpdated = formatDistance(new Date(booking.updated), new Date(), { addSuffix: true });
-
   const lookReferences = booking.references as string[] | undefined; 
 
   return (
@@ -73,7 +43,8 @@ export function BookingCard({ booking }: BookingCardProps) {
         <div className="flex gap-3  flex-col justify-between">
           <div className="flex justify-between gap-3">
             <CardTitle className="capitalize text-3xl">{booking.preferred_name}</CardTitle>
-            <Button variant="secondary">{timeAgo}</Button>
+            {/* <Badge className="capitalize">{booking.status}</Badge> */}
+            <div className="badge bagde-primary badge-outline">{formatDistance(new Date(),new Date(booking.preferred_date),  { addSuffix: true })}</div>
           </div>
           <CardDescription className="text-xl">{formattedDate}</CardDescription>
         </div>
@@ -104,14 +75,14 @@ export function BookingCard({ booking }: BookingCardProps) {
           )}
 
           {/* Inspiration section */}
-          {lookReferences&&lookReferences?.length > 0 && (
+          {lookReferences && lookReferences?.length > 0 && (
             <div className="mt-4">
               <h3 className="text-sm font-semibold mb-2">Style Inspiration</h3>
               <div className="flex flex-wrap  gap-2">
                 {lookReferences?.map((image, index) => (
                   <div
                     key={index}
-                    className="relative w-full flex-grow md:w-[300px] max-h-[300px] aspect-square rounded-md overflow-hidden">
+                    className="relative w-full  md:w-[200px] max-h-[200px] aspect-square rounded-md overflow-hidden">
                     <Image
                       src={getFileURL({
                         collection_id_or_name: "bookings",
