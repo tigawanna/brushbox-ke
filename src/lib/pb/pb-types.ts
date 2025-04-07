@@ -405,10 +405,11 @@ export interface BookingsResponse extends BaseCollectionResponse {
 	id: string;
 	by: string;
 	preferred_name: string;
-	service: '' | 'hair' | 'nails' | 'facial' | 'massage' | 'waxing' | 'other';
+	services: Array<'hair' | 'nails' | 'facial' | 'massage' | 'waxing' | 'other'>;
 	preferred_date: string;
 	special_requests: string;
 	phone: string;
+	references: MaybeArray<string>;
 	created: string;
 	updated: string;
 }
@@ -417,10 +418,11 @@ export interface BookingsCreate extends BaseCollectionCreate {
 	id?: string;
 	by?: string;
 	preferred_name?: string;
-	service?: '' | 'hair' | 'nails' | 'facial' | 'massage' | 'waxing' | 'other';
+	services?: MaybeArray<'hair' | 'nails' | 'facial' | 'massage' | 'waxing' | 'other'>;
 	preferred_date?: string | Date;
 	special_requests?: string;
 	phone?: string;
+	references?: MaybeArray<File>;
 	created?: string | Date;
 	updated?: string | Date;
 }
@@ -429,10 +431,14 @@ export interface BookingsUpdate extends BaseCollectionUpdate {
 	id: string;
 	by?: string;
 	preferred_name?: string;
-	service?: '' | 'hair' | 'nails' | 'facial' | 'massage' | 'waxing' | 'other';
+	services?: MaybeArray<'hair' | 'nails' | 'facial' | 'massage' | 'waxing' | 'other'>;
+	'services+'?: MaybeArray<'hair' | 'nails' | 'facial' | 'massage' | 'waxing' | 'other'>;
+	'services-'?: MaybeArray<'hair' | 'nails' | 'facial' | 'massage' | 'waxing' | 'other'>;
 	preferred_date?: string | Date;
 	special_requests?: string;
 	phone?: string;
+	references?: MaybeArray<File>;
+	'references-'?: string;
 	created?: string | Date;
 	updated?: string | Date;
 }

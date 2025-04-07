@@ -13,9 +13,9 @@ export default async function page({}: pageProps) {
   // console.log("currentUser",currentUser);
   return (
     <ResponsiveGenericToolbar links={[]} user={currentUser}>
-      <div className="w-full mt-10 min-h-screen h-full flex flex-col  items-center ">
-        <div className="w-full mt-10 h-full flex flex-col items-center ">
-          <h3 className="text-primary w-full sticky text-center top-20 text-xl lg:text-3xl font-bold mb-4 leading-tight">
+      <div className="w-full mt-10 min-h-screen h-full flex flex-col  items-center">
+        <div className="w-full mt-10 h-full flex  flex-col items-center p-5">
+          <h3 className="text-primary bg-red-500  w-full sticky text-center lg:text-end top-20 text-xl lg:text-3xl font-bold mb-4 leading-tight">
             bookings
           </h3>
           <BookingsDialog currentUser={currentUser} />
