@@ -1,5 +1,4 @@
 import { UsersResponse } from "@/lib/pb/pb-types";
-import { BookingSectionForm } from "../../app/bookings/__components/BookingSectionForm";
 import { BookAppointment } from "../nav/CurrentUser";
 
 interface BookingSectionProps {

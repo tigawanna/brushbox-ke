@@ -118,7 +118,7 @@ export default async function page({}: pageProps) {
     <ResponsiveGenericToolbar links={[]} user={currentUser}>
       <div className="w-full md:mt-10 min-h-screen h-full flex flex-col  items-center">
         <div className="w-full md:mt-10 h-full flex  flex-col items-center p-5">
-          <div className="w-full bg-base-100 z-30 p-2 flex flex-col md:flex-row  sticky top-2  md:top-20   items-center justify-between">
+          <div className="w-full bg-primary/10 z-30 p-2 flex flex-col md:flex-row items-center justify-between">
             <div className=" py-6 px-4 sm:px-6">
               <h2 className="text-2xl font-bold text-primary">Welcome to Your Booking Dashboard</h2>
               <p className="mt-1 text-primary/80 max-w-2xl">
@@ -127,13 +127,12 @@ export default async function page({}: pageProps) {
               </p>
             </div>
             <div className="w-full  flex flex-wrap gap-6 md:gap-2  justify-center md:justify-end">
-
-            <DeleteBookingsDialog booking={booking} />
-            <BookingsDialog
-              currentUser={currentUser}
-              booking={booking as BookingsResponse | undefined}
-            />
-          </div>
+              <DeleteBookingsDialog booking={booking} />
+              <BookingsDialog
+                currentUser={currentUser}
+                booking={booking as BookingsResponse | undefined}
+              />
+            </div>
           </div>
           <BookingCard key={booking.id} booking={booking} />
         </div>
