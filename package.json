@@ -49,7 +49,7 @@
     "input-otp": "^1.4.2",
     "lucide-react": "^0.485.0",
     "motion": "^12.6.2",
-    "next": "15.2.4",
+    "next": "15.4.7",
     "next-sitemap": "^4.2.3",
     "pocketbase": "^0.25.2",
     "react": "^19.1.0",
