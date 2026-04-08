@@ -85,7 +85,7 @@ export function PocketbaseImages({
                 record_id: recordId,
                 file_name: imageName.name,
               })}
-              alt={`Image ${index + 1}`}
+              alt={`Gallery item ${index + 1}`}
               className={`w-full h-full object-cover rounded-lg ${
                 isMarkedForDeletion ? "opacity-50 grayscale" : ""
               }`}

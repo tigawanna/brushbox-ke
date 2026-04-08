@@ -1,19 +1,30 @@
-export const concatErrors = (err_res: any) => {
-  const errs = err_res?.data?.data;
-  // //no-console("errs === ",err_res?.data?.message)
+type ErrorPayload = {
+  message?: string;
+  data?: {
+    data?: Record<string, { message?: string }>;
+    message?: string;
+  };
+};
+
+export const concatErrors = (err_res: unknown) => {
+  if (typeof err_res !== "object" || err_res === null) {
+    return err_res;
+  }
+  const root = err_res as ErrorPayload & { message?: string };
+  const errs = root.data?.data;
   if (errs && Object.keys(errs).length > 0) {
-    const err_key = Object.keys(errs);
-    // //no-console("errs keys",err_key)
     let err_str = "";
-    err_key.forEach((key) => {
-      err_str += " - " + key + ":" + errs[key].message;
+    Object.keys(errs).forEach((key) => {
+      err_str += " - " + key + ":" + (errs[key]?.message ?? "");
     });
     return err_str;
   }
-  if (err_res?.data?.message) {
-    return err_res?.data?.message;
+  if (root.data?.message) {
+    return root.data.message;
   }
-  if (err_res.message) return err_res.message;
+  if (root.message) {
+    return root.message;
+  }
 
   return err_res;
 };

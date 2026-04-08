@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function FooterSection() {
   const currentYear = new Date().getFullYear();
   return (
@@ -17,10 +19,18 @@ export function FooterSection() {
               facial treatments, massage therapy, and waxing services.
             </p>
             <div className="flex gap-4">
-              {["facebook", "instagram", "twitter"].map((social) => (
+              {(
+                [
+                  ["facebook", "https://www.facebook.com/"],
+                  ["instagram", "https://www.instagram.com/"],
+                  ["twitter", "https://twitter.com/"],
+                ] as const
+              ).map(([social, href]) => (
                 <a
                   key={social}
-                  href="#"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-8 h-8 rounded-full border border-salon-gold/30 flex items-center justify-center text-salon-gold hover:bg-salon-gold hover:text-black transition-colors"
                 >
                   <span className="sr-only">{social}</span>
@@ -145,14 +155,14 @@ export function FooterSection() {
             <div className="mt-4 md:mt-0">
               <ul className="flex gap-6 text-sm /50">
                 <li>
-                  <a href="#" className="hover:text-salon-gold">
+                  <Link href="/privacy" className="hover:text-salon-gold">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-salon-gold">
+                  <Link href="/terms" className="hover:text-salon-gold">
                     Terms of Service
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

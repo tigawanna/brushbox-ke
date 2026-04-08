@@ -1,7 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "motion/react";
 
 interface MultiImagePickerProps {
@@ -40,33 +40,30 @@ export function MultiImagePicker({
   multiple = true,
 }: MultiImagePickerProps) {
   const [dragActive, setDragActive] = useState<boolean>(false);
-  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
-  // Generate preview URLs from file/blob objects
+  const previewUrls = useMemo(() => {
+    if (images.length === 0) {
+      return [];
+    }
+    return images
+      .map((file) => {
+        if (file instanceof Blob) {
+          return URL.createObjectURL(file);
+        }
+        return undefined;
+      })
+      .filter((url): url is string => Boolean(url));
+  }, [images]);
+
   useEffect(() => {
-    // Cleanup previous object URLs to prevent memory leaks
-    const cleanup = () => {
+    return () => {
       previewUrls.forEach((url) => {
         if (url.startsWith("blob:")) {
           URL.revokeObjectURL(url);
         }
       });
     };
-
-    if (images.length > 0) {
-      const urls = images
-        ?.map((file) => {
-          if (file instanceof Blob) {
-            return URL.createObjectURL(file);
-          }
-        })
-        .filter(Boolean) as string[];
-      setPreviewUrls(urls);
-    }
-
-    // Cleanup function to prevent memory leaks
-    return cleanup;
-  }, [images]);
+  }, [previewUrls]);
 
   function handleDragOver(e: React.DragEvent<HTMLDivElement>): void {
     e.preventDefault();
@@ -157,7 +154,7 @@ export function MultiImagePicker({
             >
               <img
                 src={url}
-                alt={`Uploaded Image ${index + 1}`}
+                alt={`Upload preview ${index + 1}`}
                 className="w-full h-full object-cover rounded-lg"
               />
               <button

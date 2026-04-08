@@ -104,10 +104,18 @@ export function BookingSection({ user }: BookingSectionProps) {
             </div>
 
             <div className="mt-8 flex gap-4">
-              {["facebook", "instagram", "twitter"].map((social) => (
+              {(
+                [
+                  ["facebook", "https://www.facebook.com/"],
+                  ["instagram", "https://www.instagram.com/"],
+                  ["twitter", "https://twitter.com/"],
+                ] as const
+              ).map(([social, href]) => (
                 <a
                   key={social}
-                  href="#"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-primary /30 flex items-center justify-center text-primary  hover:bg-primary  hover:text-black transition-colors"
                 >
                   <span className="sr-only">{social}</span>

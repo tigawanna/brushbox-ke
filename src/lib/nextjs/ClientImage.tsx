@@ -9,5 +9,6 @@ export function ClientNextImage(props: ClientNextImageProps) {
 type ClientImageProps = React.ImgHTMLAttributes<HTMLImageElement>;
 
 export function ClientImage(props: ClientImageProps) {
-  return <img {...props} />;
+  const { alt, ...rest } = props;
+  return <img alt={alt ?? ""} {...rest} />;
 }

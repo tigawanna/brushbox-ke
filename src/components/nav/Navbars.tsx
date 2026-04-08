@@ -21,9 +21,7 @@ export function DesktopNav({ routes, isScrolled, isHomePage, user }: DesktopNavP
   return (
     <div className="w-full mx-auto flex items-center justify-between">
       {isHomePage ? (
-        <a href="#" className="text-primary font-heading text-xl md:text-2xl font-medium">
-          Brushbox
-        </a>
+        <span className="text-primary font-heading text-xl md:text-2xl font-medium">Brushbox</span>
       ) : (
         <Link
           href="/"
@@ -69,13 +67,13 @@ export function MobileNav({ routes, onItemClick, isHomePage, user }: MobileNavPr
     <AnimatePresence>
       <div className="flex flex-col justify-center gap-4">
         {isHomePage ? (
-          <a
-            href="#"
+          <button
+            type="button"
             onClick={onItemClick}
-            className="text-primary font-heading text-xl md:text-2xl font-medium"
+            className="text-primary font-heading text-xl md:text-2xl font-medium bg-transparent border-0 cursor-pointer text-left p-0"
           >
             Brushbox
-          </a>
+          </button>
         ) : (
           <Link
             href="/"

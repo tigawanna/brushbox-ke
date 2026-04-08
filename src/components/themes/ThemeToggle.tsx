@@ -16,6 +16,13 @@ const themeNames = {
 } as const;
 type ThemeNames = (typeof themeNames)[keyof typeof themeNames];
 
+function themeFromCookie(value: string | undefined): ThemeNames {
+  if (value === themeNames.light || value === themeNames.dark) {
+    return value;
+  }
+  return themeNames.light;
+}
+
 function updatedThemeCookie(theme: ThemeNames) {
   if (typeof window !== "undefined") {
     setDocumentCookie("theme", theme, THEME_COOKIE_MAX_AGE);
@@ -23,8 +30,8 @@ function updatedThemeCookie(theme: ThemeNames) {
 }
 
 export function ThemeToggle({ compact }: ThemeToggleProps) {
-  const [theme, setTheme] = useState<ThemeNames>(
-    (getDocumentCookie("theme") as any) || themeNames.light,
+  const [theme, setTheme] = useState<ThemeNames>(() =>
+    themeFromCookie(getDocumentCookie("theme")),
   );
   function transitionColors() {
     if (typeof window !== "undefined") {

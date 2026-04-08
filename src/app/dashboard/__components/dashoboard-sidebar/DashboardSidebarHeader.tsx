@@ -10,14 +10,12 @@ export function DashboardSidebarHeader({}: DashboardSidebarHeaderProps) {
   // const { pathname } = useLocation();
   // const { viewer } = useViewer();
   return (
-    <div
-      className="flex flex-col gap-3 "
-      onClick={() => {
-        setOpenMobile(false);
-      }}
-    >
+    <div className="flex flex-col gap-3 ">
       <Link
         href="/"
+        onClick={() => {
+          setOpenMobile(false);
+        }}
         className="flex w-full items-center justify-center border-b border-primary py-4 hover:bg-primary/20"
       >
         <SiteIcon height={50} />

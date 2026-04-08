@@ -21,8 +21,15 @@ import {
 
 import { useTransition } from "react";
 
+type SessionUser = {
+  avatar_url?: string;
+  login?: string;
+  email?: string;
+  name?: string;
+};
+
 interface DashboardSidebarUser {
-  session: { user: Record<string, any> };
+  session: { user: SessionUser };
 }
 export function DashboardSidebarUser({ session }: DashboardSidebarUser) {
   const viewer = session.user;
