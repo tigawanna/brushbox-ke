@@ -1,9 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable prefer-template */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable prettier/prettier */
 export const concatErrors = (err_res: any) => {
   const errs = err_res?.data?.data;
   // //no-console("errs === ",err_res?.data?.message)
@@ -13,7 +7,6 @@ export const concatErrors = (err_res: any) => {
     let err_str = "";
     err_key.forEach((key) => {
       err_str += " - " + key + ":" + errs[key].message;
-      ("");
     });
     return err_str;
   }

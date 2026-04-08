@@ -23,7 +23,6 @@ import {
 import { useTransition } from "react";
 
 interface DashboardSidebarUser{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   session:{user:Record<string,any>}
 }
 export function DashboardSidebarUser({session}: DashboardSidebarUser) {

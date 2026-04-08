@@ -8,7 +8,9 @@
     "postbuild": "next-sitemap",
     "pb-types": "tsx src/lib/pb/cmd/gen-types.ts",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "oxlint .",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check ."
   },
   "dependencies": {
     "@auth/core": "0.37.0",
@@ -49,12 +51,12 @@
     "input-otp": "^1.4.2",
     "lucide-react": "^0.485.0",
     "motion": "^12.6.2",
-    "next": "15.4.10",
+    "next": "16.2.2",
     "next-sitemap": "^4.2.3",
     "pocketbase": "^0.25.2",
-    "react": "^19.1.0",
+    "react": "^19.2.4",
     "react-day-picker": "9.6.4",
-    "react-dom": "^19.1.0",
+    "react-dom": "^19.2.4",
     "react-hook-form": "^7.55.0",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
@@ -67,14 +69,13 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "daisyui": "5.0.9",
-    "eslint": "^9",
-    "eslint-config-next": "15.2.4",
+    "oxfmt": "^0.44.0",
+    "oxlint": "^1.59.0",
     "postcss": "^8",
     "tailwindcss": "^4.0.0",
     "tailwindcss-animate": "^1.0.7",
