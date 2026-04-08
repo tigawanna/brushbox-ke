@@ -95,7 +95,7 @@ export function BookingSection({ user }: BookingSectionProps) {
                 <div>
                   <h4 className="font-semibold text-lg mb-1">Contact</h4>
                   <p className="/70">Phone: +254 712 345 678</p>
-                  <p className="/70">Email: info@glamourgold.com</p>
+                  <p className="/70">Email: info@brushbox.ke</p>
                 </div>
               </div>
             </div>

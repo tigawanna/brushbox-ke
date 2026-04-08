@@ -10,8 +10,8 @@ return (
         <div className="md:col-span-2">
           <div className="flex items-center mb-4">
             <span className="text-2xl font-bold font-serif">
-              <span className="">Glamour</span>
-              <span className="text-gold">Gold</span>
+              <span className="text-primary">Brush</span>
+              <span className="text-gold">Box</span>
             </span>
           </div>
           <p className=" mb-6 max-w-md">
@@ -128,7 +128,7 @@ return (
                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                 />
               </svg>
-              <span>info@glamourgold.com</span>
+              <span>info@brushbox.ke</span>
             </li>
           </ul>
         </div>
@@ -136,7 +136,7 @@ return (
 
       <div className="mt-12 pt-8 border-t border-white/10">
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <p className="/50 text-sm">© {currentYear} GlamourGold. All rights reserved.</p>
+          <p className="/50 text-sm">© {currentYear} Brushbox. All rights reserved.</p>
           <div className="mt-4 md:mt-0">
             <ul className="flex gap-6 text-sm /50">
               <li>

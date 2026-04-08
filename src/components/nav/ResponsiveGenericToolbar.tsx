@@ -34,7 +34,7 @@ export function ResponsiveGenericToolbar({ children, links,isHomePage, user }: R
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
-    <div className="drawer" data-test="sidebar-drawer">
+    <div className="drawer " data-test="sidebar-drawer">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex h-full min-h-screen flex-col bg-base-100/70">
         {/* mobile Navbar */}

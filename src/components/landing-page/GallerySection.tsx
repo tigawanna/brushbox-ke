@@ -35,11 +35,11 @@ return (
       <div className="mt-12 text-center">
         <p className=" mb-4">Follow us on Instagram for more inspiration</p>
         <a
-          href="#"
+          href="https://www.instagram.com/brushbox.ke/"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center text-primary  hover:underline">
-          @glamourgold_salon
+          @brushbox.ke
           <span className="ml-2">→</span>
         </a>
       </div>
