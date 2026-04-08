@@ -31,7 +31,7 @@ export const metadata = importedMeta;
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" data-style="vertical" data-theme="halloween">
-      <body className={`${playfair.variable} ${inter.variable}  antialiased  font-serif `}>
+      <body className={`${playfair.variable} ${inter.variable} antialiased font-sans`}>
         {children}
         <FooterSection />
         <Toaster reverseOrder />

@@ -18,8 +18,11 @@ export function BookingsDialog({ booking, onSaved }: BookingsDialogProps) {
   return (
     <ClientOnly
       fallback={
-        <button className="btn btn-outline z-20 btn-primary flex items-center justify-center gap-2">
-          <Plus className="" />
+        <button
+          type="button"
+          className="btn z-20 btn-primary shadow-md shadow-primary/15 flex items-center justify-center gap-2 min-w-[12rem]"
+        >
+          <Plus className="h-4 w-4" aria-hidden />
           {title}
         </button>
       }
@@ -30,8 +33,11 @@ export function BookingsDialog({ booking, onSaved }: BookingsDialogProps) {
         title={title}
         description="schedule your appointment with us"
         trigger={
-          <button className="btn btn-outline z-10 btn-primary flex items-center justify-center gap-2">
-            <Plus className="" />
+          <button
+            type="button"
+            className="btn z-10 btn-primary shadow-md shadow-primary/15 flex items-center justify-center gap-2 min-w-[12rem]"
+          >
+            <Plus className="h-4 w-4" aria-hidden />
             {title}
           </button>
         }
@@ -58,8 +64,11 @@ export function DeleteBookingsDialog({ booking, onDone }: DeleteBookingsDialogPr
   return (
     <ClientOnly
       fallback={
-        <button className="btn btn-outline border-[1px] z-20 btn-error flex items-center justify-center gap-2">
-          <PenOff />
+        <button
+          type="button"
+          className="btn z-20 btn-outline border-warning/45 text-warning hover:bg-warning/10 hover:border-warning/60 flex items-center justify-center gap-2"
+        >
+          <PenOff className="h-4 w-4" aria-hidden />
           {title}
         </button>
       }
@@ -70,8 +79,11 @@ export function DeleteBookingsDialog({ booking, onDone }: DeleteBookingsDialogPr
         title={title}
         description="schedule your appointment with us"
         trigger={
-          <button className="btn btn-outline border-[1px] z-10 btn-error flex items-center justify-center gap-2">
-            <PenOff />
+          <button
+            type="button"
+            className="btn z-10 btn-outline border-warning/45 text-warning hover:bg-warning/10 hover:border-warning/60 flex items-center justify-center gap-2"
+          >
+            <PenOff className="h-4 w-4" aria-hidden />
             {title}
           </button>
         }

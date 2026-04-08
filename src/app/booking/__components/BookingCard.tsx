@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Clock, Phone, Calendar } from "lucide-react";
+import { Calendar, Clock, Phone, Sparkles } from "lucide-react";
 
 interface BookingCardProps {
   booking: LocalBookingRecord;
@@ -29,60 +29,90 @@ export function BookingCard({ booking }: BookingCardProps) {
   const refs = booking.reference_image_data_urls;
 
   return (
-    <Card className="w-full overflow-hidden border-base-300 hover:border-primary/20 transition-all duration-300">
-      <CardHeader className="bg-primary/5 pb-4">
-        <div className="flex gap-3  flex-col justify-between">
-          <div className="flex justify-between gap-3">
-            <CardTitle className="capitalize text-3xl">{booking.preferred_name}</CardTitle>
-            <div className="badge bagde-primary badge-outline">
-              {formatDistance(new Date(), new Date(booking.preferred_date), { addSuffix: true })}
-            </div>
+    <Card className="w-full overflow-hidden border-base-300/90 bg-gradient-to-b from-base-100 to-base-200/30 shadow-lg shadow-black/20 ring-1 ring-primary/5 transition-all duration-300 hover:border-primary/25 hover:ring-primary/10">
+      <CardHeader className="relative border-b border-base-300/60 bg-gradient-to-br from-primary/[0.07] via-transparent to-transparent pb-6 pt-7 px-6 sm:px-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="space-y-2 min-w-0">
+            <CardTitle className="font-serif capitalize text-2xl sm:text-3xl tracking-tight text-base-content">
+              {booking.preferred_name}
+            </CardTitle>
+            <CardDescription className="text-sm sm:text-base text-base-content/65 font-normal leading-snug">
+              {formattedDate}
+            </CardDescription>
           </div>
-          <CardDescription className="text-xl">{formattedDate}</CardDescription>
+          <div className="badge badge-outline border-primary/35 bg-primary/5 text-primary whitespace-nowrap shrink-0 px-3 py-2 h-auto min-h-0 font-medium">
+            {formatDistance(new Date(), new Date(booking.preferred_date), { addSuffix: true })}
+          </div>
         </div>
       </CardHeader>
 
-      <CardContent className="p-6">
-        <div className="flex flex-col gap-4">
+      <CardContent className="px-6 sm:px-8 pb-2 pt-6">
+        <div className="flex flex-col gap-6">
           <div className="grid gap-3">
-            <div className="flex items-center gap-2">
-              <Phone className="w-4 h-4 text-base-content/70" />
-              <span className="text-sm text-base-content/70">Phone</span>
-              <span className="font-semibold">{booking.phone}</span>
+            <div className="flex items-start gap-3 rounded-xl border border-base-300/50 bg-base-200/25 px-4 py-3">
+              <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Phone className="h-4 w-4" />
+              </span>
+              <div className="min-w-0 pt-0.5">
+                <span className="text-xs font-medium uppercase tracking-wider text-base-content/45">
+                  Phone
+                </span>
+                <p className="font-medium text-base-content tabular-nums">{booking.phone}</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <Calendar className="w-4 h-4 text-base-content/70" />
-              <span className="text-sm text-base-content/70">Services</span>
-              <span className="font-semibold capitalize">{booking.services.join(", ")}</span>
+            <div className="flex items-start gap-3 rounded-xl border border-base-300/50 bg-base-200/25 px-4 py-3">
+              <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Sparkles className="h-4 w-4" />
+              </span>
+              <div className="min-w-0 pt-0.5">
+                <span className="text-xs font-medium uppercase tracking-wider text-base-content/45">
+                  Services
+                </span>
+                <p className="font-medium capitalize text-base-content">{booking.services.join(", ")}</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-base-content/70" />
-              <span className="text-sm text-base-content/70">Appointment Date</span>
-              <span className="font-semibold">{formattedDate}</span>
+            <div className="flex items-start gap-3 rounded-xl border border-base-300/50 bg-base-200/25 px-4 py-3">
+              <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Calendar className="h-4 w-4" />
+              </span>
+              <div className="min-w-0 pt-0.5">
+                <span className="text-xs font-medium uppercase tracking-wider text-base-content/45">
+                  Scheduled for
+                </span>
+                <p className="font-medium text-base-content leading-snug">{formattedDate}</p>
+              </div>
             </div>
           </div>
 
           {booking.special_requests ? (
-            <div className="mt-2">
-              <h3 className="text-sm font-semibold mb-1">Special Requests</h3>
-              <p className="bg-base-200 p-3 rounded-md text-sm">{booking.special_requests}</p>
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-base-content/50 mb-2">
+                Special requests
+              </h3>
+              <p className="rounded-xl border border-base-300/50 bg-base-200/30 px-4 py-3 text-sm leading-relaxed text-base-content/90">
+                {booking.special_requests}
+              </p>
             </div>
           ) : null}
 
           {refs.length > 0 ? (
-            <div className="mt-4">
-              <h3 className="text-sm font-semibold mb-2">Style Inspiration</h3>
-              <div className="flex flex-wrap  gap-2">
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-base-content/50 mb-3">
+                Style inspiration
+              </h3>
+              <div className="flex flex-wrap gap-4">
                 {refs.map((src, index) => (
                   <div
                     key={`${booking.id}-ref-${index}`}
-                    className="relative w-full  md:w-[200px] max-h-[200px] aspect-square rounded-md overflow-hidden"
+                    className="group relative w-full max-w-[220px] overflow-hidden rounded-xl border-2 border-primary/20 bg-base-200/40 p-1.5 shadow-inner shadow-black/20 ring-1 ring-base-300/60 transition hover:border-primary/35"
                   >
-                    <img
-                      src={src}
-                      alt={`${booking.preferred_name} inspiration ${index + 1}`}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
+                    <div className="relative aspect-square overflow-hidden rounded-lg">
+                      <img
+                        src={src}
+                        alt={`${booking.preferred_name} inspiration ${index + 1}`}
+                        className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -91,14 +121,18 @@ export function BookingCard({ booking }: BookingCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="justify-between items-center mt-4 text-xs text-base-content/60 pt-2 border-t border-base-200">
-        <div>
-          <Clock className="w-4 h-4 inline-block mr-1" />
-          <span>Created: {timeAgo}</span>
+      <CardFooter className="flex-col gap-3 border-t border-base-300/50 bg-base-200/20 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <div className="flex items-center gap-2 text-xs text-base-content/55">
+          <Clock className="h-3.5 w-3.5 shrink-0 text-primary/60" />
+          <span>
+            Created <span className="text-base-content/75">{timeAgo}</span>
+          </span>
         </div>
-        <div>
-          <Clock className="w-4 h-4 inline-block mr-1" />
-          <span>Updated: {lastUpdated}</span>
+        <div className="flex items-center gap-2 text-xs text-base-content/55">
+          <Clock className="h-3.5 w-3.5 shrink-0 text-primary/60" />
+          <span>
+            Updated <span className="text-base-content/75">{lastUpdated}</span>
+          </span>
         </div>
       </CardFooter>
     </Card>
