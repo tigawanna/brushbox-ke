@@ -61,7 +61,7 @@ export type CurrentImage = {
   name: string;
   action: "keep" | "delete";
 };
-export function BookingSectionForm({ user, booking,setOpen }: BookingSectionFormProps) {
+export function BookingSectionForm({ user, booking, setOpen }: BookingSectionFormProps) {
   // Initialize the form with default values
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingFormSchema),
@@ -113,7 +113,7 @@ export function BookingSectionForm({ user, booking,setOpen }: BookingSectionForm
       makeHotToast({
         title: "Booking Update Successful",
         description:
-        "Your appointment has been updated successfully. Confirmation will be sent to your email.",
+          "Your appointment has been updated successfully. Confirmation will be sent to your email.",
         variant: "success",
       });
       form.reset();
@@ -327,7 +327,8 @@ export function BookingSectionForm({ user, booking,setOpen }: BookingSectionForm
           <Button
             type="submit"
             disabled={isPending || updateMutationIspending}
-            className="w-full bg-primary text-base-100 hover:bg-primary-focus">
+            className="w-full bg-primary text-base-100 hover:bg-primary-focus"
+          >
             Book Appointment{" "}
             {(isPending || updateMutationIspending) && <Loader className="animate-spin ml-2" />}
           </Button>

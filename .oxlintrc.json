@@ -1,14 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "typescript",
-    "unicorn",
-    "oxc",
-    "react",
-    "import",
-    "jsx-a11y",
-    "nextjs"
-  ],
+  "plugins": ["typescript", "unicorn", "oxc", "react", "import", "jsx-a11y", "nextjs"],
   "categories": {
     "correctness": "error"
   },
@@ -32,11 +24,5 @@
   "env": {
     "builtin": true
   },
-  "ignorePatterns": [
-    ".next",
-    "out",
-    "node_modules",
-    "pnpm-lock.yaml",
-    "next-env.d.ts"
-  ]
+  "ignorePatterns": [".next", "out", "node_modules", "pnpm-lock.yaml", "next-env.d.ts"]
 }

@@ -28,7 +28,8 @@ export function TestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-black p-8 rounded-lg border border-primary /20 transition-transform hover:-translate-y-1">
+              className="bg-black p-8 rounded-lg border border-primary /20 transition-transform hover:-translate-y-1"
+            >
               <div className="flex justify-between items-center mb-4">
                 <div>
                   <h4 className="font-serif text-lg font-semibold">{testimonial.name}</h4>

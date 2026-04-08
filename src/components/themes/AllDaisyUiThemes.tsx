@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 interface AllDaisyUiThemesProps {
-  compact?: boolean
+  compact?: boolean;
 }
 
 function updatedThemeCookie(theme: string) {
@@ -16,7 +16,7 @@ function updatedThemeCookie(theme: string) {
   }
 }
 
-export function AllDaisyUiThemes({compact}: AllDaisyUiThemesProps) {
+export function AllDaisyUiThemes({ compact }: AllDaisyUiThemesProps) {
   const allDaisyUiThems = [
     "forest",
     "cupacake",
@@ -39,22 +39,22 @@ export function AllDaisyUiThemes({compact}: AllDaisyUiThemesProps) {
   ];
   // const { theme, updateTheme } = useTheme();
   const [theme, setTheme] = useState(allDaisyUiThems[0]);
-    function changeTheme(theme: string) {
-      try {
-        document.startViewTransition(() => {
-          document.documentElement.dataset.theme = theme;
-          setTheme(theme);
-          updatedThemeCookie(theme);
-        });
-      } catch (error) {
+  function changeTheme(theme: string) {
+    try {
+      document.startViewTransition(() => {
         document.documentElement.dataset.theme = theme;
         setTheme(theme);
         updatedThemeCookie(theme);
-      }
+      });
+    } catch (error) {
+      document.documentElement.dataset.theme = theme;
+      setTheme(theme);
+      updatedThemeCookie(theme);
     }
-    if(compact){
-      return
-    }
+  }
+  if (compact) {
+    return;
+  }
   return (
     <Select value={theme} onValueChange={changeTheme}>
       <SelectTrigger className="w-[180px]">
@@ -70,7 +70,8 @@ export function AllDaisyUiThemes({compact}: AllDaisyUiThemesProps) {
               value={thm}
               onClick={() => {
                 changeTheme(thm);
-              }}>
+              }}
+            >
               {thm}
             </SelectItem>
           );

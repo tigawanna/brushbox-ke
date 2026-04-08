@@ -6,12 +6,7 @@ import {
   SidebarMenuButton,
   useSidebar,
 } from "@/components/ui/sidebar";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { usePathname } from "next/navigation";
 import { useParams } from "next/navigation";
 
@@ -22,8 +17,8 @@ interface DashboardSidebarLinksProps {}
 
 export function DashboardSidebarLinks({}: DashboardSidebarLinksProps) {
   const { state, setOpen, setOpenMobile, isMobile } = useSidebar();
-   const pathname = usePathname();
-     const {user} = useParams<{user:string}>();
+  const pathname = usePathname();
+  const { user } = useParams<{ user: string }>();
   // const { pathname } = useLocation();
   // const {viewer} = useViewer()
   // const {user} = useParams({from:"/$user"})
@@ -33,9 +28,7 @@ export function DashboardSidebarLinks({}: DashboardSidebarLinksProps) {
 
   return (
     <SidebarGroup className="h-full bg-base-100 ">
-      <SidebarGroupLabel>
-        {user}
-      </SidebarGroupLabel>
+      <SidebarGroupLabel>{user}</SidebarGroupLabel>
       <SidebarMenu className="gap-5">
         {routes.map((item) => {
           return (
@@ -49,7 +42,8 @@ export function DashboardSidebarLinks({}: DashboardSidebarLinksProps) {
                         pathname === `${user}${item.href}`
                           ? `flex w-full gap-3 rounded-lg bg-primary p-1 text-secondary`
                           : `flex w-full gap-3 rounded-sm p-1 hover:bg-base-300`
-                      }>
+                      }
+                    >
                       <Link
                         className="flex items-center gap-[10%]"
                         href={`${user}${item.href}`}
@@ -58,7 +52,8 @@ export function DashboardSidebarLinks({}: DashboardSidebarLinksProps) {
                             setOpen(false);
                             setOpenMobile(false);
                           }
-                        }}>
+                        }}
+                      >
                         <button className="size-6">{item.icon}</button>
                         {(state === "expanded" || isMobile) && (
                           <span className="text-center text-lg"> {item.name}</span>

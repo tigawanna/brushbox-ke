@@ -1,5 +1,5 @@
-"use client"
-import Link  from "next/link";
+"use client";
+import Link from "next/link";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,10 +19,7 @@ export function NextjsBreadCrumbs() {
       <Breadcrumb>
         <BreadcrumbList>
           {breadcrumb_routes.map((crumb) => {
-            if (
-              breadcrumb_routes.length - 1 ===
-              breadcrumb_routes?.indexOf(crumb)
-            ) {
+            if (breadcrumb_routes.length - 1 === breadcrumb_routes?.indexOf(crumb)) {
               return (
                 <BreadcrumbItem key={crumb.path}>
                   <BreadcrumbPage className="hover:text-accent-text line-clamp-1 cursor-pointer text-xs hover:max-w-fit hover:duration-300 hover:animate-in hover:fade-in">

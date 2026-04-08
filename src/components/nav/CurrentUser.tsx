@@ -28,25 +28,22 @@ interface CurrentUserProps {
 }
 
 export function BookAppointment({ user }: CurrentUserProps) {
-if (!user) {
+  if (!user) {
     const authUrl = `/auth?returnTo=/booking`;
     return (
-      <Link
-        href={authUrl}
-        className="flex gap-2 z-20 btn btn-primary  justify-center items-center">
+      <Link href={authUrl} className="flex gap-2 z-20 btn btn-primary  justify-center items-center">
         <Icons.scissors className="size-6" />
         Book and appointment
-    
       </Link>
     );
   }
   return (
     <Link
       href={"/booking"}
-      className="flex gap-2 z-20 btn btn-primary  justify-center items-center">
+      className="flex gap-2 z-20 btn btn-primary  justify-center items-center"
+    >
       <Icons.scissors className="size-7" />
       Book and appointment
-
     </Link>
   );
 }
@@ -111,7 +108,8 @@ export function LogoutButton() {
             console.error(err);
           });
       }}
-      className="btn btn-wide btn-accent btn-outline ">
+      className="btn btn-wide btn-accent btn-outline "
+    >
       Logout {isPending && <Loader className="animate-spin" />}
     </button>
   );

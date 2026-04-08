@@ -31,7 +31,7 @@ interface PocketbaseImagesProps {
   //   setImageNames?: React.Dispatch<React.SetStateAction<string[]>>;
   imageNames?: CurrentImage[];
   setImageNames?: React.Dispatch<React.SetStateAction<CurrentImage[] | undefined>>;
-/**
+  /**
    * Optional CSS class names
    */
   className?: string;
@@ -44,7 +44,7 @@ export function PocketbaseImages({
   setImageNames,
   className = "",
 }: PocketbaseImagesProps) {
- function handleRemoveImage(fileName: string): void {
+  function handleRemoveImage(fileName: string): void {
     setImageNames?.((prev) => {
       if (!prev) return [{ name: fileName, action: "delete" }];
       return prev.map((item) => {
@@ -58,7 +58,6 @@ export function PocketbaseImages({
         return item;
       });
     });
- 
   }
   //   console.log({ imageNames, imagesToDelete });
 
@@ -78,7 +77,8 @@ export function PocketbaseImages({
               opacity: isMarkedForDeletion ? 0.5 : 1,
               scale: isMarkedForDeletion ? 0.95 : 1,
             }}
-            className="relative group aspect-square">
+            className="relative group aspect-square"
+          >
             <img
               src={getFileURL({
                 collection_id_or_name: collectionName,
@@ -93,14 +93,15 @@ export function PocketbaseImages({
             <button
               type="button"
               onClick={() => handleRemoveImage(imageName.name)}
-            //   disabled={isMarkedForDeletion}
+              //   disabled={isMarkedForDeletion}
               className={`absolute top-1 right-1 p-1 rounded-full transition-all
                 ${
                   isMarkedForDeletion
                     ? "bg-error/70 text-base-100"
                     : "bg-base-300/80 hover:bg-error text-base-content hover:text-white opacity-0 group-hover:opacity-100"
                 }`}
-              aria-label={isMarkedForDeletion ? "Image marked for deletion" : "Remove image"}>
+              aria-label={isMarkedForDeletion ? "Image marked for deletion" : "Remove image"}
+            >
               <X size={16} />
             </button>
           </motion.div>

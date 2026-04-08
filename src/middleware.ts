@@ -3,16 +3,12 @@ import { isTokenExpired } from "pocketbase";
 
 export function middleware(request: NextRequest) {
   // Protected routes
-  const protectedPaths = ["/dashboard","/profile","/bookings"];
-  const isProtectedPath = protectedPaths.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  );
+  const protectedPaths = ["/dashboard", "/profile", "/bookings"];
+  const isProtectedPath = protectedPaths.some((path) => request.nextUrl.pathname.startsWith(path));
 
   // Auth routes (login/register)
   const authPaths = ["/", "/register"];
-  const isAuthPath = authPaths.some(
-    (path) => request.nextUrl.pathname === path
-  );
+  const isAuthPath = authPaths.some((path) => request.nextUrl.pathname === path);
 
   const authCookie = request.cookies.get("pb_auth");
   const token = authCookie?.value ? JSON.parse(authCookie.value).token : null;

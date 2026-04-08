@@ -6,7 +6,6 @@ interface GenericDataCardsSkeletonProps {
   containerClassName?: string;
 }
 
-
 export function GenericDataCardsSkeleton({
   cardClassName,
   containerClassName,

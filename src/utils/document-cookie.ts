@@ -11,7 +11,7 @@ export function getDocumentCookie(key: string) {
 
 export function setDocumentCookie(key: string, value: string, age?: number) {
   if (typeof window !== "undefined") {
-    document.cookie = `${key}=${value}; path=/; max-age=${age||SET_COOKIE_MAX_AGE}`;
+    document.cookie = `${key}=${value}; path=/; max-age=${age || SET_COOKIE_MAX_AGE}`;
   }
 }
 

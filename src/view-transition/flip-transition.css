@@ -2,12 +2,12 @@
   --size: 45px;
   /* --line: color-mix(in lch, white, transparent 85%); */
   /* background:oklch(var(--b1)) */
-    /* linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size)) 50% 50% /
+  /* linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size)) 50% 50% /
       var(--size) var(--size),
     linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% /
       var(--size) var(--size),
       oklch(var(--b1) / 1); */
-    /* hsl(210 70% 34%); */
+  /* hsl(210 70% 34%); */
 }
 
 [data-style="flip"]::view-transition-new(body),

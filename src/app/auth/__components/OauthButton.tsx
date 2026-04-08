@@ -32,7 +32,8 @@ export function OauthButton({ returnTo }: OauthButtonProps) {
       <button
         disabled={pending}
         className="btn btn-wide btn-accent btn-outline w-full h-12"
-        onClick={() => startTransition(() => signInuser())}>
+        onClick={() => startTransition(() => signInuser())}
+      >
         <FaGoogle className="size-7" />
         Sign in with Google
         {pending && <Loader className="animate-spin size-7" />}

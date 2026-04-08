@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { hairStyles } from "@/data/hair-styles";
 import Image from "next/image";
 import { useState } from "react";
@@ -24,13 +24,13 @@ export function HairStylesSection() {
             <button
               key={tab}
               className={`btn transition-all ${
-                activeTab === tab
-                  ? "btn btn-primary"
-                  : "btn btn-outline border-[1px]"
+                activeTab === tab ? "btn btn-primary" : "btn btn-outline border-[1px]"
               }`}
               onClick={() => {
                 console.log(tab);
-                setActiveTab(tab)}}>
+                setActiveTab(tab);
+              }}
+            >
               {hairStyles[tab as keyof typeof hairStyles].title}
             </button>
           ))}
@@ -44,8 +44,8 @@ export function HairStylesSection() {
             <Image
               src={hairStyles[activeTab as keyof typeof hairStyles].image}
               alt={hairStyles[activeTab as keyof typeof hairStyles].title}
-                width={800}
-                height={800}
+              width={800}
+              height={800}
               className="rounded-lg w-full h-[400px] object-cover relative z-10"
             />
           </div>
@@ -55,9 +55,7 @@ export function HairStylesSection() {
             <h3 className="text-3xl font-serif font-bold mb-4">
               {hairStyles[activeTab as keyof typeof hairStyles].title}
             </h3>
-            <p className=" mb-6">
-              {hairStyles[activeTab as keyof typeof hairStyles].description}
-            </p>
+            <p className=" mb-6">{hairStyles[activeTab as keyof typeof hairStyles].description}</p>
             <ul className="space-y-3 mb-8 font-sans">
               <li className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-primary rounded-full"></span>
@@ -69,9 +67,7 @@ export function HairStylesSection() {
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-primary rounded-full"></span>
-                <span className="">
-                  Customizable to your preferences and face shape
-                </span>
+                <span className="">Customizable to your preferences and face shape</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-primary rounded-full"></span>

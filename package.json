@@ -8,9 +8,10 @@
     "postbuild": "next-sitemap",
     "pb-types": "tsx src/lib/pb/cmd/gen-types.ts",
     "start": "next start",
-    "lint": "oxlint .",
+    "lint": "oxlint --fix .",
     "format": "oxfmt --write .",
-    "format:check": "oxfmt --check ."
+    "format:check": "oxfmt --check .",
+    "check": "oxlint . && oxfmt --check ."
   },
   "dependencies": {
     "@auth/core": "0.37.0",

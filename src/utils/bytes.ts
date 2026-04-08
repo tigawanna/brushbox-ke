@@ -15,4 +15,3 @@ export function formatKilobytes(kilobytes: number): string {
     return `${gigabytes.toFixed(2)} GB`;
   }
 }
-

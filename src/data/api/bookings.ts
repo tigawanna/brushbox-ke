@@ -24,7 +24,7 @@ export async function unbookAppointment(
   pb: TypedPocketBase<Schema>,
   bookingId: string,
   type: "cancel" | "reschedule",
-  postponedTo?: string
+  postponedTo?: string,
 ) {
   try {
     if (type === "cancel") {

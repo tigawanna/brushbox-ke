@@ -20,7 +20,6 @@ import { Button } from "@/components/ui/button";
 
 import { X } from "lucide-react";
 
-
 import { useMediaQuery } from "@/hooks/use-media-query";
 interface DiaDrawerProps {
   title: string;
@@ -44,9 +43,7 @@ export function DiaDrawer({
   if (matches) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          {trigger ?? <Button variant="outline">Open </Button>}
-        </DialogTrigger>
+        <DialogTrigger asChild>{trigger ?? <Button variant="outline">Open </Button>}</DialogTrigger>
         <DialogContent className="max:w-[70vw] ">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
@@ -58,10 +55,8 @@ export function DiaDrawer({
     );
   }
   return (
-    <Drawer open={open} onOpenChange={setOpen} >
-      <DrawerTrigger asChild>
-        {trigger ?? <Button variant="outline">Open </Button>}
-      </DrawerTrigger>
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>{trigger ?? <Button variant="outline">Open </Button>}</DrawerTrigger>
       <DrawerContent className="max-w-[100vw] p-2 h-fit   max-h-[90%] ">
         <div className="flex h-full w-full flex-col p-5 overflow-y-scroll md:items-center md:justify-center md:max-w-[60%] ">
           <DrawerHeader>

@@ -30,7 +30,8 @@ export function BookingSection({ user }: BookingSectionProps) {
                     className="w-5 h-5 text-primary "
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke="currentColor">
+                    stroke="currentColor"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -59,7 +60,8 @@ export function BookingSection({ user }: BookingSectionProps) {
                     className="w-5 h-5 text-primary "
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke="currentColor">
+                    stroke="currentColor"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -83,7 +85,8 @@ export function BookingSection({ user }: BookingSectionProps) {
                     className="w-5 h-5 text-primary "
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke="currentColor">
+                    stroke="currentColor"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -105,13 +108,15 @@ export function BookingSection({ user }: BookingSectionProps) {
                 <a
                   key={social}
                   href="#"
-                  className="w-10 h-10 rounded-full border border-primary /30 flex items-center justify-center text-primary  hover:bg-primary  hover:text-black transition-colors">
+                  className="w-10 h-10 rounded-full border border-primary /30 flex items-center justify-center text-primary  hover:bg-primary  hover:text-black transition-colors"
+                >
                   <span className="sr-only">{social}</span>
                   <svg
                     className="w-5 h-5"
                     fill="currentColor"
                     viewBox="0 0 24 24"
-                    aria-hidden="true">
+                    aria-hidden="true"
+                  >
                     {social === "facebook" && (
                       <path
                         fillRule="evenodd"
@@ -138,7 +143,7 @@ export function BookingSection({ user }: BookingSectionProps) {
           {/* Booking section */}
           <div className="bg-base-200/30 p-8 rounded-lg border border-primary/20 flex flex-col justify-between">
             <h3 className="text-2xl font-serif font-semibold mb-6">Request an Appointment</h3>
-            
+
             <div className="space-y-4 mb-8">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
@@ -147,7 +152,8 @@ export function BookingSection({ user }: BookingSectionProps) {
                     className="w-5 h-5 text-primary"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke="currentColor">
+                    stroke="currentColor"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -163,7 +169,7 @@ export function BookingSection({ user }: BookingSectionProps) {
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                   <svg
@@ -171,7 +177,8 @@ export function BookingSection({ user }: BookingSectionProps) {
                     className="w-5 h-5 text-primary"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke="currentColor">
+                    stroke="currentColor"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -187,7 +194,7 @@ export function BookingSection({ user }: BookingSectionProps) {
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                   <svg
@@ -195,7 +202,8 @@ export function BookingSection({ user }: BookingSectionProps) {
                     className="w-5 h-5 text-primary"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke="currentColor">
+                    stroke="currentColor"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -212,11 +220,15 @@ export function BookingSection({ user }: BookingSectionProps) {
                 </div>
               </div>
             </div>
-            
+
             <div className="text-sm text-base-content/70 mb-8 p-3 bg-base-300/30 rounded-md border border-base-300">
-              <p>Looking for a same-day appointment? Call us directly at <span className="text-primary font-semibold">+254 712 345 678</span> for availability.</p>
+              <p>
+                Looking for a same-day appointment? Call us directly at{" "}
+                <span className="text-primary font-semibold">+254 712 345 678</span> for
+                availability.
+              </p>
             </div>
-            
+
             <BookAppointment user={user} />
           </div>
         </div>

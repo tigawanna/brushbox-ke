@@ -16,4 +16,3 @@ const NoSSR = ({ children, fallback }: ClientOnlyProps) => {
 export const ClientOnly = dynamic(() => Promise.resolve(NoSSR), {
   ssr: false,
 }) as typeof NoSSR;
-

@@ -12,16 +12,15 @@ export async function serverPBClient() {
   if (!authCookie) {
     return serverPB;
   }
-  
-  const cookiePayload = authCookie.value
+
+  const cookiePayload = authCookie.value;
   const cookieString = `pb_auth=${cookiePayload}`;
-  serverPB.authStore.loadFromCookie(cookieString,"pb_auth");
+  serverPB.authStore.loadFromCookie(cookieString, "pb_auth");
   return serverPB;
 }
 
-export async function getServerCurrentUser( client?: TypedPocketBase<Schema>){
-    const pb = client||await serverPBClient();
-    const currentUser = await pb.authStore
-    return currentUser.record as UsersResponse
+export async function getServerCurrentUser(client?: TypedPocketBase<Schema>) {
+  const pb = client || (await serverPBClient());
+  const currentUser = await pb.authStore;
+  return currentUser.record as UsersResponse;
 }
-

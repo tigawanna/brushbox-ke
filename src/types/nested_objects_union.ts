@@ -1,13 +1,4 @@
-type Prev = [
-  never,
-  0,
-  1,
-  2,
-  3,
-  4,
-  5,
-...0[],
-];
+type Prev = [never, 0, 1, 2, 3, 4, 5, ...0[]];
 
 /**
  * Joins two parts of a path with a dot separator
@@ -43,7 +34,7 @@ type Join<K, P> = K extends string | number
  *   };
  *   h: Date;
  * };
- * 
+ *
  * type NestedKeys1 = PossibleNestedUnions<ExampleType, 1>;  // "a" | "b" | "h"
  * type NestedKeys2 = PossibleNestedUnions<ExampleType, 2>;  // "a" | "b" | "b.c" | "b.d" | "h"
  * type NestedKeys3 = PossibleNestedUnions<ExampleType, 3>;  // "a" | "b" | "b.c" | "b.d" | "b.d.e" | "b.d.f" | "h"
@@ -78,7 +69,7 @@ export type PossibleNestedUnions<T, D extends number = 10> = [D] extends [never]
  *   };
  *   h: Date;
  * };
- * 
+ *
  * type FlatKeys1 = FlatObjectKeys<ExampleType, 1>;  // "a" | "b" | "h"
  * type FlatKeys2 = FlatObjectKeys<ExampleType, 2>;  // "a" | "b" | "c" | "d" | "h"
  * type FlatKeys3 = FlatObjectKeys<ExampleType, 3>;  // "a" | "b" | "c" | "d" | "e" | "f" | "h"

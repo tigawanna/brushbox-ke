@@ -1,34 +1,34 @@
-"use client"
+"use client";
 
-import { X } from "lucide-react"
-import { useState, useEffect } from "react"
-import { motion } from "motion/react"
+import { X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion } from "motion/react";
 
 interface MultiImagePickerProps {
   /**
    * Array of File/Blob objects to display
    */
-  images?: File[]
+  images?: File[];
   /**
    * Callback to update the File/Blob array
    */
-  setImages?: (images: File[]) => void
+  setImages?: (images: File[]) => void;
   /**
    * Maximum number of images allowed
    */
-  maxImages?: number
+  maxImages?: number;
   /**
    * Optional CSS class names
    */
-  className?: string
+  className?: string;
   /**
    * File types to accept
    */
-  accept?: React.InputHTMLAttributes<HTMLInputElement>["accept"]
+  accept?: React.InputHTMLAttributes<HTMLInputElement>["accept"];
   /**
    * Allow multiple file selection
    */
-  multiple?: boolean
+  multiple?: boolean;
 }
 
 export function MultiImagePicker({
@@ -39,78 +39,79 @@ export function MultiImagePicker({
   accept = "image/*",
   multiple = true,
 }: MultiImagePickerProps) {
-  const [dragActive, setDragActive] = useState<boolean>(false)
-  const [previewUrls, setPreviewUrls] = useState<string[]>([])
-  
+  const [dragActive, setDragActive] = useState<boolean>(false);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+
   // Generate preview URLs from file/blob objects
   useEffect(() => {
     // Cleanup previous object URLs to prevent memory leaks
     const cleanup = () => {
-      previewUrls.forEach(url => {
-        if (url.startsWith('blob:')) {
-          URL.revokeObjectURL(url)
+      previewUrls.forEach((url) => {
+        if (url.startsWith("blob:")) {
+          URL.revokeObjectURL(url);
         }
-      })
-    }
-    
-    if(images.length > 0) {
-      const urls = images?.map(file => {
-        if (file instanceof Blob) {
-          return URL.createObjectURL(file)
-        }
-      }).filter(Boolean) as string[]
-      setPreviewUrls(urls)
+      });
+    };
 
+    if (images.length > 0) {
+      const urls = images
+        ?.map((file) => {
+          if (file instanceof Blob) {
+            return URL.createObjectURL(file);
+          }
+        })
+        .filter(Boolean) as string[];
+      setPreviewUrls(urls);
     }
-    
+
     // Cleanup function to prevent memory leaks
-    return cleanup
-  }, [images])
-  
+    return cleanup;
+  }, [images]);
+
   function handleDragOver(e: React.DragEvent<HTMLDivElement>): void {
-    e.preventDefault()
-    e.stopPropagation()
-    setDragActive(true)
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(true);
   }
-  
+
   function handleDragLeave(e: React.DragEvent<HTMLDivElement>): void {
-    e.preventDefault()
-    e.stopPropagation()
-    setDragActive(false)
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
   }
-  
+
   function handleDrop(e: React.DragEvent<HTMLDivElement>): void {
-    e.preventDefault()
-    e.stopPropagation()
-    setDragActive(false)
-    
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      handleFileChange(e.dataTransfer.files)
+      handleFileChange(e.dataTransfer.files);
     }
   }
-  
+
   function handleFileChange(fileList: FileList): void {
-    const remainingSlots = maxImages - (images?.length || 0)
-    if (remainingSlots <= 0) return
-    
+    const remainingSlots = maxImages - (images?.length || 0);
+    if (remainingSlots <= 0) return;
+
     const newFiles = Array.from(fileList)
       .slice(0, remainingSlots)
-      .filter(file => file.type.startsWith('image/'))
-    
+      .filter((file) => file.type.startsWith("image/"));
+
     if (setImages && newFiles.length > 0) {
-      setImages([...images, ...newFiles])
+      setImages([...images, ...newFiles]);
     }
   }
-  
+
   function removeImage(indexToRemove: number): void {
-    if (!setImages) return
-    
-    const updatedImages = [...images]
-    updatedImages.splice(indexToRemove, 1)
-    setImages(updatedImages)
+    if (!setImages) return;
+
+    const updatedImages = [...images];
+    updatedImages.splice(indexToRemove, 1);
+    setImages(updatedImages);
   }
-  
-  const canAddMoreImages = images.length < maxImages
+
+  const canAddMoreImages = images.length < maxImages;
 
   return (
     <div className={`w-full flex flex-col items-center justify-center gap-4 ${className}`}>
@@ -172,6 +173,5 @@ export function MultiImagePicker({
         </div>
       )}
     </div>
-  )
+  );
 }
-

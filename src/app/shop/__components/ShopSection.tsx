@@ -16,7 +16,9 @@ export function ShopSection({ products }: ShopSectionProps) {
     "fragrance",
     "tools",
   ];
- const [selectedCategory, setSelectedCategory] = useState<BeautyProduct["category"] | "all">("all");
+  const [selectedCategory, setSelectedCategory] = useState<BeautyProduct["category"] | "all">(
+    "all",
+  );
   const filteredProducts =
     selectedCategory === "all"
       ? products
@@ -28,14 +30,16 @@ export function ShopSection({ products }: ShopSectionProps) {
       <div className="flex flex-wrap gap-2 mb-8">
         <button
           className={`btn btn-sm ${selectedCategory === "all" ? "btn-primary" : "btn-ghost"}`}
-          onClick={() => setSelectedCategory("all")}>
+          onClick={() => setSelectedCategory("all")}
+        >
           All
         </button>
         {categories.map((category) => (
           <button
             key={category}
             className={`btn btn-sm ${selectedCategory === category ? "btn-primary" : "btn-ghost"}`}
-            onClick={() => setSelectedCategory(category)}>
+            onClick={() => setSelectedCategory(category)}
+          >
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </button>
         ))}
@@ -47,7 +51,8 @@ export function ShopSection({ products }: ShopSectionProps) {
             key={product.id}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="bg-primary/20 rounded-t-lg w-full">
+            className="bg-primary/20 rounded-t-lg w-full"
+          >
             <figure className="overflow-hidden">
               <Image
                 src={product.image}
@@ -64,7 +69,8 @@ export function ShopSection({ products }: ShopSectionProps) {
               <div className="flex justify-between items-center mt-4">
                 <span className="text-primary font-bold">${product.price.toFixed(2)}</span>
                 <button
-                  className={`btn btn-primary btn-sm ${!product.inStock ? "btn-disabled" : ""}`}>
+                  className={`btn btn-primary btn-sm ${!product.inStock ? "btn-disabled" : ""}`}
+                >
                   {product.inStock ? "Add to Cart" : "Out of Stock"}
                 </button>
               </div>

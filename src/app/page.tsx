@@ -9,7 +9,6 @@ import { ResponsiveGenericToolbar } from "@/components/nav/ResponsiveGenericTool
 import { homePageSections } from "@/components/nav/routes";
 import { getServerCurrentUser } from "@/lib/pb/server-client";
 
-
 export default async function Home() {
   const currentUser = await getServerCurrentUser();
   return (
@@ -21,7 +20,7 @@ export default async function Home() {
         <AboutSection />
         <TestimonialsSection />
         <GallerySection />
-        <BookingSection user={currentUser}/>
+        <BookingSection user={currentUser} />
       </ResponsiveGenericToolbar>
     </main>
   );

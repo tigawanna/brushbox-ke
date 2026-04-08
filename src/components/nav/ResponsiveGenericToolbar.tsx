@@ -6,7 +6,6 @@ import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { UsersResponse } from "@/lib/pb/pb-types";
 
-
 interface ResponsiveGenericToolbarProps {
   children: React.ReactNode;
   isHomePage?: boolean;
@@ -18,7 +17,12 @@ interface ResponsiveGenericToolbarProps {
   }[];
 }
 
-export function ResponsiveGenericToolbar({ children, links,isHomePage, user }: ResponsiveGenericToolbarProps) {
+export function ResponsiveGenericToolbar({
+  children,
+  links,
+  isHomePage,
+  user,
+}: ResponsiveGenericToolbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const closeMobileMenu = () => {
@@ -43,22 +47,26 @@ export function ResponsiveGenericToolbar({ children, links,isHomePage, user }: R
           className={cn("fixed top-0 left-0 right-0 z-50 p-3 md:px-12 flex-none md:hidden")}
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          transition={{ duration: 0.5 }}>
+          transition={{ duration: 0.5 }}
+        >
           <label
             htmlFor="my-drawer-3"
             aria-label="open sidebar"
             className="btn btn-square btn-ghost"
-            data-test="homepage-side-drawer-toggle">
+            data-test="homepage-side-drawer-toggle"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              className="inline-block h-6 w-6 stroke-current">
+              className="inline-block h-6 w-6 stroke-current"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"></path>
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
             </svg>
           </label>
         </motion.nav>
@@ -70,11 +78,12 @@ export function ResponsiveGenericToolbar({ children, links,isHomePage, user }: R
             "fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12 hidden md:flex",
             isScrolled
               ? "bg-base-100 backdrop-blur-md shadow-soft transition-colors"
-              : "bg-transparent"
+              : "bg-transparent",
           )}
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          transition={{ duration: 0.5 }}>
+          transition={{ duration: 0.5 }}
+        >
           <DesktopNav isHomePage={isHomePage} routes={links} isScrolled={isScrolled} user={user} />
         </motion.nav>
 
@@ -85,7 +94,8 @@ export function ResponsiveGenericToolbar({ children, links,isHomePage, user }: R
         <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
         <ul
           data-test="homepage-sidebar"
-          className="menu min-h-full w-80 justify-between bg-base-200/70 p-4 pb-16">
+          className="menu min-h-full w-80 justify-between bg-base-200/70 p-4 pb-16"
+        >
           {/* Sidebar content here */}
           <MobileNav
             isHomePage={isHomePage}

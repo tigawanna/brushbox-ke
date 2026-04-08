@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import { useSidebar } from "@/components/ui/sidebar";
-import SiteIcon from "@/components/icons/Siteicon"
+import SiteIcon from "@/components/icons/Siteicon";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 interface DashboardSidebarHeaderProps {}
@@ -14,10 +14,12 @@ export function DashboardSidebarHeader({}: DashboardSidebarHeaderProps) {
       className="flex flex-col gap-3 "
       onClick={() => {
         setOpenMobile(false);
-      }}>
+      }}
+    >
       <Link
         href="/"
-        className="flex w-full items-center justify-center border-b border-primary py-4 hover:bg-primary/20">
+        className="flex w-full items-center justify-center border-b border-primary py-4 hover:bg-primary/20"
+      >
         <SiteIcon height={50} />
       </Link>
       {/* {viewer && (

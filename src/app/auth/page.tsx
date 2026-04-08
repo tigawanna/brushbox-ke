@@ -21,7 +21,7 @@ export default async function SignInPage({
             "absolute inset-0 opacity-20",
             "[background-size:20px_20px]",
             "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
-            "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]"
+            "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
           )}
         />
 
@@ -50,7 +50,7 @@ export default async function SignInPage({
             </div>
 
             <div>
-              <OauthButton returnTo={returnTo??"/"} />
+              <OauthButton returnTo={returnTo ?? "/"} />
             </div>
 
             <div className="text-center mt-4">

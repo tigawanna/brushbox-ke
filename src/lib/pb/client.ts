@@ -1,4 +1,4 @@
-import {TypedPocketBase} from "@tigawanna/typed-pocketbase";
+import { TypedPocketBase } from "@tigawanna/typed-pocketbase";
 import { Schema } from "./pb-types";
 
 if (!process.env.NEXT_PUBLIC_PB_URL) {
@@ -6,7 +6,6 @@ if (!process.env.NEXT_PUBLIC_PB_URL) {
 }
 
 export const clientPB = new TypedPocketBase<Schema>(process.env.NEXT_PUBLIC_PB_URL);
-
 
 export async function logoutUser() {
   return await new Promise((resolve) => {
@@ -17,4 +16,3 @@ export async function logoutUser() {
     }, 3000);
   });
 }
-

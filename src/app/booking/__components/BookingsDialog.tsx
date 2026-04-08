@@ -9,12 +9,12 @@ import { BookingCancelForm } from "./BookingCancleForm";
 
 interface BookingsDialogProps {
   currentUser: UsersResponse;
-  booking?:BookingsResponse
+  booking?: BookingsResponse;
 }
 
-export function BookingsDialog({ currentUser,booking }: BookingsDialogProps) {
+export function BookingsDialog({ currentUser, booking }: BookingsDialogProps) {
   const [open, setOpen] = useState(false);
-  const title = booking? "Update Appointment" : "Book an appointment";
+  const title = booking ? "Update Appointment" : "Book an appointment";
   return (
     <ClientOnly
       fallback={
@@ -22,7 +22,8 @@ export function BookingsDialog({ currentUser,booking }: BookingsDialogProps) {
           <Plus className="" />
           {title}
         </button>
-      }>
+      }
+    >
       <DiaDrawer
         open={open}
         setOpen={setOpen}
@@ -33,28 +34,30 @@ export function BookingsDialog({ currentUser,booking }: BookingsDialogProps) {
             <Plus className="" />
             {title}
           </button>
-        }>
+        }
+      >
         <BookingSectionForm user={currentUser} booking={booking} setOpen={setOpen} />
       </DiaDrawer>
     </ClientOnly>
   );
 }
 interface DeleteBookingsDialogProps {
-  booking?:BookingsResponse
+  booking?: BookingsResponse;
 }
 
 export function DeleteBookingsDialog({ booking }: DeleteBookingsDialogProps) {
   const [open, setOpen] = useState(false);
-  const title = booking? "Move Appointment" : "Book an appointment";
-  if(!booking) return null;
+  const title = booking ? "Move Appointment" : "Book an appointment";
+  if (!booking) return null;
   return (
     <ClientOnly
       fallback={
         <button className="btn btn-outline border-[1px] z-20 btn-error flex items-center justify-center gap-2">
-        <PenOff />
+          <PenOff />
           {title}
         </button>
-      }>
+      }
+    >
       <DiaDrawer
         open={open}
         setOpen={setOpen}
@@ -62,11 +65,12 @@ export function DeleteBookingsDialog({ booking }: DeleteBookingsDialogProps) {
         description="schedule your appointment with us"
         trigger={
           <button className="btn btn-outline border-[1px] z-10 btn-error flex items-center justify-center gap-2">
-          <PenOff />
+            <PenOff />
             {title}
           </button>
-        }>
-        <BookingCancelForm bookingId={booking.id} onSuccess={()=>setOpen(false)} />
+        }
+      >
+        <BookingCancelForm bookingId={booking.id} onSuccess={() => setOpen(false)} />
       </DiaDrawer>
     </ClientOnly>
   );

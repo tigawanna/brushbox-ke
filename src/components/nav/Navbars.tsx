@@ -4,7 +4,6 @@ import { CurrentUser } from "./CurrentUser";
 import Link from "next/link";
 import { UsersResponse } from "@/lib/pb/pb-types";
 
-
 type Route = {
   name: string;
   href: string;
@@ -18,21 +17,18 @@ type DesktopNavProps = {
   user?: UsersResponse;
 };
 
-
-
-export function DesktopNav({ routes, isScrolled,isHomePage,user }: DesktopNavProps) {
+export function DesktopNav({ routes, isScrolled, isHomePage, user }: DesktopNavProps) {
   return (
     <div className="w-full mx-auto flex items-center justify-between">
       {isHomePage ? (
-        <a
-          href="#"
-          className="text-primary font-heading text-xl md:text-2xl font-medium">
+        <a href="#" className="text-primary font-heading text-xl md:text-2xl font-medium">
           Brushbox
         </a>
       ) : (
         <Link
           href="/"
-          className="text-primary p-2 font-heading rounded-4xl text-xl md:text-3xl font-medium">
+          className="text-primary p-2 font-heading rounded-4xl text-xl md:text-3xl font-medium"
+        >
           Brushbox
         </Link>
       )}
@@ -48,12 +44,13 @@ export function DesktopNav({ routes, isScrolled,isHomePage,user }: DesktopNavPro
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 * index }}
-            whileHover={{ scale: 1.05 }}>
+            whileHover={{ scale: 1.05 }}
+          >
             {route.name.charAt(0).toUpperCase() + route.name.slice(1)}
           </motion.a>
         ))}
         {/* <ModeToggle /> */}
-        <CurrentUser user={user}/>
+        <CurrentUser user={user} />
       </div>
     </div>
   );
@@ -67,7 +64,7 @@ type MobileNavProps = {
   user?: UsersResponse;
 };
 
-export function MobileNav({ routes, onItemClick,isHomePage,user }: MobileNavProps) {
+export function MobileNav({ routes, onItemClick, isHomePage, user }: MobileNavProps) {
   return (
     <AnimatePresence>
       <div className="flex flex-col justify-center gap-4">
@@ -75,13 +72,15 @@ export function MobileNav({ routes, onItemClick,isHomePage,user }: MobileNavProp
           <a
             href="#"
             onClick={onItemClick}
-            className="text-primary font-heading text-xl md:text-2xl font-medium">
+            className="text-primary font-heading text-xl md:text-2xl font-medium"
+          >
             Brushbox
           </a>
         ) : (
           <Link
             href="/"
-            className="text-primary p-2 font-heading rounded-4xl text-xl md:text-3xl font-medium">
+            className="text-primary p-2 font-heading rounded-4xl text-xl md:text-3xl font-medium"
+          >
             Brushbox
           </Link>
         )}
@@ -90,7 +89,8 @@ export function MobileNav({ routes, onItemClick,isHomePage,user }: MobileNavProp
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.3 }}>
+          transition={{ duration: 0.3 }}
+        >
           <div className="px-6 py-4 flex flex-col space-y-4">
             {routes.map((route, index) => (
               <motion.a
@@ -99,7 +99,8 @@ export function MobileNav({ routes, onItemClick,isHomePage,user }: MobileNavProp
                 onClick={onItemClick}
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.1 * index }}>
+                transition={{ delay: 0.1 * index }}
+              >
                 <span className="text-primary/70">{route.icon}</span>
                 <span>{route.name.charAt(0).toUpperCase() + route.name.slice(1)}</span>
               </motion.a>

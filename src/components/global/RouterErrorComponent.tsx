@@ -34,9 +34,7 @@ export function RouterErrorComponent({ error }: UserFriendlyErrorProps) {
           <p className="text-sm text-muted-foreground">
             Our team has been notified and is working on a fix.
           </p>
-          {process.env.NODE_ENV === "development"&&(
-            <RouterjustErrorComponent error={error} />
-          )}
+          {process.env.NODE_ENV === "development" && <RouterjustErrorComponent error={error} />}
           <div className="mt-4 flex gap-4">
             <Button asChild>
               <Link href="/">Go to Homepage</Link>

@@ -12,7 +12,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-
 import {
   SidebarMenu,
   SidebarMenuButton,
@@ -22,10 +21,10 @@ import {
 
 import { useTransition } from "react";
 
-interface DashboardSidebarUser{
-  session:{user:Record<string,any>}
+interface DashboardSidebarUser {
+  session: { user: Record<string, any> };
 }
-export function DashboardSidebarUser({session}: DashboardSidebarUser) {
+export function DashboardSidebarUser({ session }: DashboardSidebarUser) {
   const viewer = session.user;
   const avatarUrl = viewer?.avatar_url ?? "/wojak-smirk-tuxedo.jpg";
   const { state, setOpenMobile, isMobile } = useSidebar();
@@ -56,12 +55,15 @@ export function DashboardSidebarUser({session}: DashboardSidebarUser) {
             className=" min-w-56 rounded-lg p-2 text-base-content px-4"
             side={isMobile ? "bottom" : "right"}
             align="end"
-            sideOffset={4}>
+            sideOffset={4}
+          >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={avatarUrl} alt={viewer.login} />
-                  <AvatarFallback className="rounded-lg">{viewer.login?.slice(0, 2)}</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {viewer.login?.slice(0, 2)}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="flex items-center gap-1 truncate font-semibold">
@@ -103,7 +105,8 @@ export function DashboardSidebarUser({session}: DashboardSidebarUser) {
                 className="btn btn-error btn-wide max-w-[98%]"
                 onClick={() => {
                   signOutuser();
-                }}>
+                }}
+              >
                 Logout
                 {pending && <Loader className="animate-spin h-5 w-5" />}
               </button>

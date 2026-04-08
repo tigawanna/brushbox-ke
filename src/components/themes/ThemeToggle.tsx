@@ -18,14 +18,14 @@ type ThemeNames = (typeof themeNames)[keyof typeof themeNames];
 
 function updatedThemeCookie(theme: ThemeNames) {
   if (typeof window !== "undefined") {
-  setDocumentCookie("theme", theme, THEME_COOKIE_MAX_AGE);
+    setDocumentCookie("theme", theme, THEME_COOKIE_MAX_AGE);
   }
 }
 
-
-
 export function ThemeToggle({ compact }: ThemeToggleProps) {
-  const [theme, setTheme] = useState<ThemeNames>(getDocumentCookie("theme") as any || themeNames.light);
+  const [theme, setTheme] = useState<ThemeNames>(
+    (getDocumentCookie("theme") as any) || themeNames.light,
+  );
   function transitionColors() {
     if (typeof window !== "undefined") {
       try {

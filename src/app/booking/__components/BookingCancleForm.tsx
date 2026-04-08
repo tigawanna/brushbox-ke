@@ -4,7 +4,7 @@ import { clientPB } from "@/lib/pb/client";
 import { unbookAppointment } from "@/data/api/bookings";
 import { useCustomMutation } from "@/hooks/use-cutom-mutation";
 import { makeHotToast } from "@/components/shared/toasters";
-import { ChevronRight, Loader, Trash,History, Save, CheckCheck } from "lucide-react";
+import { ChevronRight, Loader, Trash, History, Save, CheckCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { formatPBDate } from "@/lib/pb/utils";
 
@@ -52,20 +52,23 @@ export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormPro
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="card w-full max-w-md bg-base-100 shadow-xl p-2">
+      className="card w-full max-w-md bg-base-100 shadow-xl p-2"
+    >
       {!action ? (
         <div className="flex flex gap-3 justify-evenly">
           <button
             onClick={() => setAction("cancel")}
             className="btn btn-error text-error bg-error/10  border-[1px]"
-            disabled={isPending}>
+            disabled={isPending}
+          >
             Cancel Booking
             <Trash className="" />
           </button>
           <button
             onClick={() => setAction("reschedule")}
             className="btn btn-info bg-info/30  border-[1px]"
-            disabled={isPending}>
+            disabled={isPending}
+          >
             Reschedule Booking <History />
           </button>
         </div>
@@ -73,7 +76,8 @@ export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormPro
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="flex flex-col gap-4">
+          className="flex flex-col gap-4"
+        >
           <p className="text-sm">
             {action === "cancel"
               ? "Are you sure you want to cancel this booking?"
@@ -96,7 +100,8 @@ export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormPro
                       });
                     }}
                     className={`btn btn-warning border-[1px] btn-outline `}
-                    disabled={isPending}>
+                    disabled={isPending}
+                  >
                     {`Confirm ${action}`}
                     <Save />
                     {isPending && <Loader className="animate-spin" />}
@@ -105,7 +110,8 @@ export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormPro
                 <button
                   onClick={() => setAction(null)}
                   className="btn btn-info btn-outline border-[1px]"
-                  disabled={isPending}>
+                  disabled={isPending}
+                >
                   Back <ChevronRight />
                 </button>
               </div>
@@ -118,7 +124,8 @@ export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormPro
                     });
                   }}
                   className={`btn btn-warning btn-outline border-[1px]`}
-                  disabled={isPending}>
+                  disabled={isPending}
+                >
                   {`Confirm ${action}`}
                   <CheckCheck />
                   {isPending && <Loader className="animate-spin" />}
@@ -126,7 +133,8 @@ export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormPro
                 <button
                   onClick={() => setAction(null)}
                   className="btn btn-info btn-outline border-[1px]"
-                  disabled={isPending}>
+                  disabled={isPending}
+                >
                   Back <ChevronRight />
                 </button>
               </div>
@@ -137,4 +145,3 @@ export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormPro
     </motion.div>
   );
 }
-

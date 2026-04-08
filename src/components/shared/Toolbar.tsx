@@ -4,7 +4,6 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { ClientOnly } from "@/lib/nextjs/ClientOnly";
 import { Hexagon } from "lucide-react";
 
-
 interface ToolbarProps {}
 
 export function Toolbar({}: ToolbarProps) {

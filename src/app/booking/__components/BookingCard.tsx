@@ -12,10 +12,6 @@ import {
 import { Clock, Phone, Calendar } from "lucide-react";
 import { getFileURL } from "@/lib/pb/utils";
 
-
-
-
-
 interface BookingCardProps {
   booking: BookingsResponse;
 }
@@ -35,7 +31,7 @@ export function BookingCard({ booking }: BookingCardProps) {
   const timeAgo = formatDistance(new Date(booking.created), new Date(), { addSuffix: true });
   // Calculate time since last update
   const lastUpdated = formatDistance(new Date(booking.updated), new Date(), { addSuffix: true });
-  const lookReferences = booking.references as string[] | undefined; 
+  const lookReferences = booking.references as string[] | undefined;
 
   return (
     <Card className="w-full overflow-hidden border-base-300 hover:border-primary/20 transition-all duration-300">
@@ -44,7 +40,9 @@ export function BookingCard({ booking }: BookingCardProps) {
           <div className="flex justify-between gap-3">
             <CardTitle className="capitalize text-3xl">{booking.preferred_name}</CardTitle>
             {/* <Badge className="capitalize">{booking.status}</Badge> */}
-            <div className="badge bagde-primary badge-outline">{formatDistance(new Date(),new Date(booking.preferred_date),  { addSuffix: true })}</div>
+            <div className="badge bagde-primary badge-outline">
+              {formatDistance(new Date(), new Date(booking.preferred_date), { addSuffix: true })}
+            </div>
           </div>
           <CardDescription className="text-xl">{formattedDate}</CardDescription>
         </div>
@@ -82,7 +80,8 @@ export function BookingCard({ booking }: BookingCardProps) {
                 {lookReferences?.map((image, index) => (
                   <div
                     key={index}
-                    className="relative w-full  md:w-[200px] max-h-[200px] aspect-square rounded-md overflow-hidden">
+                    className="relative w-full  md:w-[200px] max-h-[200px] aspect-square rounded-md overflow-hidden"
+                  >
                     <Image
                       src={getFileURL({
                         collection_id_or_name: "bookings",

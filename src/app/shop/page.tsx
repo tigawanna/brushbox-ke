@@ -3,7 +3,6 @@ import { serverPBClient, getServerCurrentUser } from "@/lib/pb/server-client";
 import { ShopSection } from "./__components/ShopSection";
 import { beautyProducts } from "@/data/api/shop";
 
-
 export default async function ShopPage() {
   // const pb = await serverPBClient();
   // const cuccrentUser = await getServerCurrentUser(pb);

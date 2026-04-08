@@ -1,16 +1,14 @@
 import { Schema } from "./pb-types";
 
-
 const PB_URL = process.env.NEXT_PUBLIC_PB_URL;
 
-export function formatPBDate(date: string|Date) {
+export function formatPBDate(date: string | Date) {
   // Convert the date to a string if it's a Date object
   if (date instanceof Date) {
     return date.toISOString().replace("T", " ");
   }
-  return new Date(date).toISOString().replace("T", " ")
+  return new Date(date).toISOString().replace("T", " ");
 }
-
 
 export type CollectionName = keyof Schema;
 
@@ -25,7 +23,7 @@ export function getFileURL({
   file_name?: string;
   fallback?: string;
 }) {
-  if(!PB_URL) {
+  if (!PB_URL) {
     throw new Error("PocketBase URL is not defined");
   }
   if (!collection_id_or_name || !file_name || !record_id) {

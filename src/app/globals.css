@@ -1,9 +1,6 @@
 @import "tailwindcss";
 @plugin 'tailwindcss-animate';
 
-
-
-
 @plugin "daisyui" {
   /* themes: cupcake --default, forest --prefersdark; */
   themes: false;
@@ -69,7 +66,6 @@
   }
 }
 
-
 @layer base {
   *,
   ::after,
@@ -81,17 +77,15 @@
   @media (prefers-reduced-motion: no-preference) {
     html {
       scroll-behavior: smooth;
-    };
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+    }
+    a:nth-of-type(2) .logo {
+      animation: logo-spin infinite 20s linear;
+    }
   }
+
+  .card {
+    padding: 2em;
   }
-
-
-.card {
-  padding: 2em;
-}
-
 }
 
 @utility gold-gradient {
@@ -207,12 +201,17 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50 ;
+    @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
   }
-    h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-serif;
   }
 }
@@ -258,5 +257,3 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-accent;
 }
-
-
