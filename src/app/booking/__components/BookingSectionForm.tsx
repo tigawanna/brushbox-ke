@@ -1,6 +1,5 @@
 "use client";
 
-import { UsersResponse, BookingsCreate, BookingsResponse, BookingsUpdate } from "@/lib/pb/pb-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,17 +15,34 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useCustomMutation } from "@/hooks/use-cutom-mutation";
-import { clientPB } from "@/lib/pb/client";
-import { Loader } from "lucide-react";
+import { Loader, X } from "lucide-react";
 import { makeHotToast } from "@/components/shared/toasters";
 import { MultiSelect } from "@/components/ui/multi-select";
-import { formatPBDate, getFileURL } from "@/lib/pb/utils";
+import { formatPBDate } from "@/lib/pb/utils";
 import { MultiImagePicker } from "@/components/shared/MultiImagePicker";
-import { PocketbaseImages } from "@/lib/pb/components/PocketbaseImages";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { motion } from "motion/react";
+import type { LocalBookingRecord } from "@/types/local-booking";
+import {
+  createLocalBooking,
+  fileToDataUrl,
+  updateLocalBooking,
+} from "@/services/bookings/bookings.idb";
 
-// Define available services based on the BookingsCreate type
+function toDatetimeLocalInput(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function preferredDateForInput(stored: string): string {
+  const normalized = stored.includes("T") ? stored : stored.replace(" ", "T");
+  const d = new Date(normalized);
+  if (Number.isNaN(d.getTime())) {
+    return toDatetimeLocalInput(new Date());
+  }
+  return toDatetimeLocalInput(d);
+}
+
 const servicesList = [
   "hair",
   "nails",
@@ -34,96 +50,108 @@ const servicesList = [
   "massage",
   "waxing",
   "other",
-] as const satisfies readonly ("hair" | "nails" | "facial" | "massage" | "waxing" | "other")[];
+] as const;
 
-// Updated schema to match the new BookingsCreate interface
-
-const bookingFormSchema: z.ZodType<Omit<BookingsUpdate, "id">> = z.object({
+const bookingFormSchema = z.object({
   preferred_name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   phone: z.string().min(10, { message: "Please enter a valid phone number." }),
   services: z.array(z.enum(servicesList)),
   preferred_date: z.coerce.string().min(1, { message: "Please select a date and time." }),
   special_requests: z.string().optional(),
-  references: z.array(z.any()).optional(),
-
-  // File uploads would need to be handled separately
+  references: z.array(z.instanceof(File)).optional(),
 });
 
 type BookingFormValues = z.infer<typeof bookingFormSchema>;
 
 interface BookingSectionFormProps {
-  user: UsersResponse;
-  booking?: BookingsResponse;
+  booking?: LocalBookingRecord;
   setOpen?: (open: boolean) => void;
+  onSaved?: () => void;
 }
 
-export type CurrentImage = {
-  name: string;
+export type ExistingReferenceSlot = {
+  index: number;
+  dataUrl: string;
   action: "keep" | "delete";
 };
-export function BookingSectionForm({ user, booking, setOpen }: BookingSectionFormProps) {
-  // Initialize the form with default values
+
+export function BookingSectionForm({ booking, setOpen, onSaved }: BookingSectionFormProps) {
+  const initialSlots: ExistingReferenceSlot[] =
+    booking?.reference_image_data_urls.map((dataUrl, index) => ({
+      index,
+      dataUrl,
+      action: "keep" as const,
+    })) ?? [];
+  const [referenceSlots, setReferenceSlots] = useState<ExistingReferenceSlot[]>(initialSlots);
+
+  useEffect(() => {
+    setReferenceSlots(
+      booking?.reference_image_data_urls.map((dataUrl, index) => ({
+        index,
+        dataUrl,
+        action: "keep" as const,
+      })) ?? [],
+    );
+  }, [booking?.id, booking?.reference_image_data_urls]);
+
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingFormSchema),
     defaultValues: {
-      preferred_name: booking?.preferred_name || user?.name || "",
-      phone: booking?.phone || "",
-      services: booking?.services || [],
-      preferred_date: booking?.preferred_date || formatPBDate(new Date()),
-      special_requests: booking?.special_requests || "",
-      references: (booking?.references as File[] | undefined) || [],
-      // "references-":[""]
+      preferred_name: booking?.preferred_name ?? "",
+      phone: booking?.phone ?? "",
+      services: booking?.services ?? [],
+      preferred_date: booking?.preferred_date
+        ? preferredDateForInput(booking.preferred_date)
+        : toDatetimeLocalInput(new Date()),
+      special_requests: booking?.special_requests ?? "",
+      references: [],
     },
   });
-  const currentImages = booking?.references as string[] | undefined;
-  const currSavedImages = currentImages?.map((i) => {
-    return { name: i, action: "keep" } as const;
-  });
-  const [savedImages, setSavedImages] = useState<CurrentImage[] | undefined>(currSavedImages);
-  const router = useRouter();
+
   const { isPending, mutate } = useCustomMutation({
-    mutationFn: async ({ variables }: { variables: BookingsCreate }) => {
-      return clientPB.from("bookings").create(variables);
+    mutationFn: async ({ variables: values }: { variables: BookingFormValues }) => {
+      const newUrls = await Promise.all((values.references ?? []).map((f) => fileToDataUrl(f)));
+      const keptExisting = referenceSlots
+        .filter((s) => s.action === "keep")
+        .map((s) => s.dataUrl);
+      const reference_image_data_urls = [...keptExisting, ...newUrls];
+      const base = {
+        preferred_name: values.preferred_name,
+        phone: values.phone,
+        services: values.services,
+        preferred_date: formatPBDate(values.preferred_date),
+        special_requests: values.special_requests ?? "",
+        reference_image_data_urls,
+        status: "" as const,
+        staff_notes: booking?.staff_notes ?? "",
+        staff_status: booking?.staff_status ?? "new",
+      };
+      if (booking?.id) {
+        return updateLocalBooking(booking.id, base);
+      }
+      return createLocalBooking(base);
     },
-    onSuccess(data) {
+    onSuccess() {
       makeHotToast({
-        title: "Booking Successful",
-        description:
-          "Your appointment has been booked successfully. Confirmation will be sent to your email.",
+        title: "Booking saved",
+        description: "Your appointment details have been saved.",
         variant: "success",
       });
-      form.reset();
-      router.refresh();
+      form.reset({
+        preferred_name: "",
+        phone: "",
+        services: [],
+        preferred_date: toDatetimeLocalInput(new Date()),
+        special_requests: "",
+        references: [],
+      });
+      setReferenceSlots([]);
       setOpen?.(false);
+      onSaved?.();
     },
     onError(error) {
       makeHotToast({
-        title: "Booking Failed",
-        description: error.message,
-        variant: "error",
-        duration: 10000,
-      });
-    },
-  });
-  const { isPending: updateMutationIspending, mutate: updateMutation } = useCustomMutation({
-    mutationFn: async ({ variables }: { variables: BookingsUpdate }) => {
-      return clientPB.from("bookings").update(variables.id, variables);
-    },
-    onSuccess(data) {
-      makeHotToast({
-        title: "Booking Update Successful",
-        description:
-          "Your appointment has been updated successfully. Confirmation will be sent to your email.",
-        variant: "success",
-      });
-      form.reset();
-      router.refresh();
-      setOpen?.(false);
-    },
-    onError(error) {
-      console.log("Error updating booking:", error);
-      makeHotToast({
-        title: "Booking Update Failed",
+        title: "Could not save booking",
         description: error.message,
         variant: "error",
         duration: 10000,
@@ -135,37 +163,17 @@ export function BookingSectionForm({ user, booking, setOpen }: BookingSectionFor
     if (!data.preferred_date) {
       throw new Error("Please select a date and time.");
     }
-    if (booking?.id) {
-      const imagesToBeDeleted = savedImages
-        ?.filter((image) => image.action === "delete")
-        .map((image) => image.name);
-      updateMutation({
-        variables: {
-          id: booking.id,
-          by: user.id,
-          preferred_name: data.preferred_name,
-          phone: data.phone,
-          services: data.services,
-          preferred_date: formatPBDate(data.preferred_date),
-          special_requests: data.special_requests,
-          "references+": data.references,
-          // @ts-expect-error : this is supposed to take in an array insted of string
-          "references-": imagesToBeDeleted,
-        },
-      });
-    } else {
-      mutate({
-        variables: {
-          by: user.id,
-          preferred_name: data.preferred_name,
-          phone: data.phone,
-          services: data.services,
-          preferred_date: formatPBDate(data.preferred_date),
-          special_requests: data.special_requests,
-          references: data.references,
-        },
-      });
-    }
+    mutate({ variables: data });
+  }
+
+  function toggleReferenceSlot(i: number): void {
+    setReferenceSlots((prev) =>
+      prev.map((slot) =>
+        slot.index === i
+          ? { ...slot, action: slot.action === "keep" ? "delete" : "keep" }
+          : slot,
+      ),
+    );
   }
 
   return (
@@ -223,10 +231,11 @@ export function BookingSectionForm({ user, booking, setOpen }: BookingSectionFor
                   Service Requested
                 </FormLabel>
                 <MultiSelect
+                  key={(booking?.id ?? "new") + field.value.join(",")}
                   options={servicesList.map((service) => ({ label: service, value: service }))}
                   onValueChange={field.onChange}
-                  // defaultValue={selectedFrameworks}
-                  placeholder="Select frameworks"
+                  defaultValue={field.value}
+                  placeholder="Select services"
                   className="border-primary/50"
                   variant="outline"
                   animation={2}
@@ -246,7 +255,6 @@ export function BookingSectionForm({ user, booking, setOpen }: BookingSectionFor
                   Preferred Date & Time
                 </FormLabel>
                 <FormControl>
-                  {/* @ts-expect-error:field.value will always be a string  */}
                   <Input
                     type="datetime-local"
                     className="bg-base-200 border-primary/30 focus:border-primary"
@@ -257,50 +265,61 @@ export function BookingSectionForm({ user, booking, setOpen }: BookingSectionFor
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="references-"
-            render={({ field }) => {
-              return (
-                <FormItem>
-                  <FormLabel className="text-sm font-medium text-base-content/70">
-                    Reference images
-                  </FormLabel>
-                  <FormControl>
-                    <PocketbaseImages
-                      imageNames={savedImages}
-                      setImageNames={setSavedImages}
-                      // setImagesToBeDeleted={setSavedImages}
-                      recordId={booking?.id || ""}
-                      collectionName="bookings"
-                      fieldName="references"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
-          />
+
+          {referenceSlots.length > 0 ? (
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-base-content/70">Reference images</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 w-full">
+                {referenceSlots.map((slot) => {
+                  const isMarked = slot.action === "delete";
+                  return (
+                    <motion.div
+                      key={slot.index}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{
+                        opacity: isMarked ? 0.5 : 1,
+                        scale: isMarked ? 0.95 : 1,
+                      }}
+                      className="relative group aspect-square"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => toggleReferenceSlot(slot.index)}
+                        className="absolute top-1 right-1 z-10 btn btn-circle btn-xs btn-error opacity-80"
+                        aria-label={isMarked ? "Restore image" : "Remove image"}
+                      >
+                        <X className="size-3" />
+                      </button>
+                      <img
+                        src={slot.dataUrl}
+                        alt=""
+                        className="w-full h-full object-cover rounded-md border border-base-300"
+                      />
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
+
           <FormField
             control={form.control}
             name="references"
-            render={({ field }) => {
-              return (
-                <FormItem>
-                  <FormLabel className="text-sm font-medium text-base-content/70">
-                    New Reference images
-                  </FormLabel>
-                  <FormControl>
-                    <MultiImagePicker
-                      images={field.value as File[] | undefined}
-                      setImages={field.onChange}
-                      accept="image/jpeg,image/png,image/webp,image/gif"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm font-medium text-base-content/70">
+                  New reference images
+                </FormLabel>
+                <FormControl>
+                  <MultiImagePicker
+                    images={field.value}
+                    setImages={field.onChange}
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
 
           <FormField
@@ -326,11 +345,10 @@ export function BookingSectionForm({ user, booking, setOpen }: BookingSectionFor
 
           <Button
             type="submit"
-            disabled={isPending || updateMutationIspending}
+            disabled={isPending}
             className="w-full bg-primary text-base-100 hover:bg-primary-focus"
           >
-            Book Appointment{" "}
-            {(isPending || updateMutationIspending) && <Loader className="animate-spin ml-2" />}
+            Book Appointment {isPending && <Loader className="animate-spin ml-2" />}
           </Button>
         </form>
       </Form>

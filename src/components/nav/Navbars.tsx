@@ -2,8 +2,6 @@
 import { motion, AnimatePresence } from "motion/react";
 import { CurrentUser } from "./CurrentUser";
 import Link from "next/link";
-import { UsersResponse } from "@/lib/pb/pb-types";
-
 type Route = {
   name: string;
   href: string;
@@ -14,10 +12,9 @@ type DesktopNavProps = {
   routes: Route[];
   isScrolled: boolean;
   isHomePage?: boolean;
-  user?: UsersResponse;
 };
 
-export function DesktopNav({ routes, isScrolled, isHomePage, user }: DesktopNavProps) {
+export function DesktopNav({ routes, isScrolled, isHomePage }: DesktopNavProps) {
   return (
     <div className="w-full mx-auto flex items-center justify-between">
       {isHomePage ? (
@@ -48,7 +45,7 @@ export function DesktopNav({ routes, isScrolled, isHomePage, user }: DesktopNavP
           </motion.a>
         ))}
         {/* <ModeToggle /> */}
-        <CurrentUser user={user} />
+        <CurrentUser />
       </div>
     </div>
   );
@@ -59,10 +56,9 @@ type MobileNavProps = {
   isOpen: boolean;
   onItemClick: () => void;
   isHomePage?: boolean;
-  user?: UsersResponse;
 };
 
-export function MobileNav({ routes, onItemClick, isHomePage, user }: MobileNavProps) {
+export function MobileNav({ routes, onItemClick, isHomePage }: MobileNavProps) {
   return (
     <AnimatePresence>
       <div className="flex flex-col justify-center gap-4">
@@ -107,7 +103,7 @@ export function MobileNav({ routes, onItemClick, isHomePage, user }: MobileNavPr
         </motion.div>
         <div className="flex justify-evenly">
           {/* <ModeToggle /> */}
-          <CurrentUser user={user} />
+          <CurrentUser />
         </div>
       </div>
     </AnimatePresence>

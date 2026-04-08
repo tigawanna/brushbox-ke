@@ -1,10 +1,6 @@
-import { UsersResponse } from "@/lib/pb/pb-types";
 import { BookAppointment } from "../nav/CurrentUser";
 
-interface BookingSectionProps {
-  user: UsersResponse;
-}
-export function BookingSection({ user }: BookingSectionProps) {
+export function BookingSection() {
   return (
     <section id="booking" className="section-padding  relative">
       {/* Gold accent elements */}
@@ -221,9 +217,9 @@ export function BookingSection({ user }: BookingSectionProps) {
                   </svg>
                 </div>
                 <div>
-                  <h4 className="font-semibold">Digital Confirmation</h4>
+                  <h4 className="font-semibold">Your booking summary</h4>
                   <p className="text-sm text-base-content/70">
-                    Receive booking details directly to your email
+                    Review your services and time in one place before you arrive
                   </p>
                 </div>
               </div>
@@ -237,7 +233,7 @@ export function BookingSection({ user }: BookingSectionProps) {
               </p>
             </div>
 
-            <BookAppointment user={user} />
+            <BookAppointment />
           </div>
         </div>
       </div>

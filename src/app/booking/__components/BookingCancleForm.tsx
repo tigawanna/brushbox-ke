@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { clientPB } from "@/lib/pb/client";
-import { unbookAppointment } from "@/data/api/bookings";
 import { useCustomMutation } from "@/hooks/use-cutom-mutation";
 import { makeHotToast } from "@/components/shared/toasters";
 import { ChevronRight, Loader, Trash, History, Save, CheckCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { formatPBDate } from "@/lib/pb/utils";
+import { updateLocalBooking } from "@/services/bookings/bookings.idb";
 
 interface BookingCancelFormProps {
   bookingId: string;
@@ -15,7 +14,6 @@ interface BookingCancelFormProps {
 }
 
 export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormProps) {
-  const pb = clientPB;
   const [action, setAction] = useState<"cancel" | "reschedule" | null>(null);
   const [rescheduleDate, setRescheduleDate] = useState<string>(new Date().toISOString());
   const isRescheduleDatGraeterThanRightNow = rescheduleDate
@@ -28,7 +26,17 @@ export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormPro
     }: {
       variables: { action: "cancel" | "reschedule"; rescheduleTo?: string };
     }) => {
-      return await unbookAppointment(pb, bookingId, variables.action, variables.rescheduleTo);
+      if (variables.action === "cancel") {
+        await updateLocalBooking(bookingId, { status: "canceled" });
+        return true;
+      }
+      if (variables.rescheduleTo) {
+        await updateLocalBooking(bookingId, {
+          preferred_date: variables.rescheduleTo,
+          status: "rescheduled",
+        });
+      }
+      return true;
     },
     onSuccess: () => {
       makeHotToast({
@@ -39,13 +47,12 @@ export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormPro
       onSuccess?.();
       setAction(null);
     },
-    onError: (error) => {
+    onError: () => {
       makeHotToast({
         title: "Error",
         description: "There was an error updating your booking.",
         variant: "error",
       });
-      console.log("Error:", error);
     },
   });
   return (

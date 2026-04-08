@@ -4,9 +4,8 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { motion } from "motion/react";
 import { CollectionName, getFileURL } from "../utils";
-import { CurrentImage } from "@/app/booking/__components/BookingSectionForm";
 
-type ImageType = {
+type CurrentImage = {
   name: string;
   action: "keep" | "delete";
 };

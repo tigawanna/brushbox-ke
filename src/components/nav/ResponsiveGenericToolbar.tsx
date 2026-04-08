@@ -4,12 +4,9 @@ import { DesktopNav, MobileNav } from "./Navbars";
 import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { UsersResponse } from "@/lib/pb/pb-types";
-
 interface ResponsiveGenericToolbarProps {
   children: React.ReactNode;
   isHomePage?: boolean;
-  user?: UsersResponse;
   links: {
     name: string;
     href: string;
@@ -21,7 +18,6 @@ export function ResponsiveGenericToolbar({
   children,
   links,
   isHomePage,
-  user,
 }: ResponsiveGenericToolbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -84,7 +80,7 @@ export function ResponsiveGenericToolbar({
           animate={{ y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <DesktopNav isHomePage={isHomePage} routes={links} isScrolled={isScrolled} user={user} />
+          <DesktopNav isHomePage={isHomePage} routes={links} isScrolled={isScrolled} />
         </motion.nav>
 
         {/* Page content here */}
@@ -100,7 +96,6 @@ export function ResponsiveGenericToolbar({
           <MobileNav
             isHomePage={isHomePage}
             routes={links}
-            user={user}
             isOpen
             onItemClick={() => closeMobileMenu()}
           />

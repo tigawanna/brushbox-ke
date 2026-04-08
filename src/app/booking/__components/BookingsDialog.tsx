@@ -3,16 +3,16 @@ import { DiaDrawer } from "@/components/shared/DiaDrawer";
 import { PenOff, Plus } from "lucide-react";
 import { BookingSectionForm } from "./BookingSectionForm";
 import { useState } from "react";
-import { BookingsResponse, UsersResponse } from "@/lib/pb/pb-types";
+import type { LocalBookingRecord } from "@/types/local-booking";
 import { ClientOnly } from "@/lib/nextjs/ClientOnly";
 import { BookingCancelForm } from "./BookingCancleForm";
 
 interface BookingsDialogProps {
-  currentUser: UsersResponse;
-  booking?: BookingsResponse;
+  booking?: LocalBookingRecord;
+  onSaved?: () => void;
 }
 
-export function BookingsDialog({ currentUser, booking }: BookingsDialogProps) {
+export function BookingsDialog({ booking, onSaved }: BookingsDialogProps) {
   const [open, setOpen] = useState(false);
   const title = booking ? "Update Appointment" : "Book an appointment";
   return (
@@ -27,7 +27,7 @@ export function BookingsDialog({ currentUser, booking }: BookingsDialogProps) {
       <DiaDrawer
         open={open}
         setOpen={setOpen}
-        title="{title"
+        title={title}
         description="schedule your appointment with us"
         trigger={
           <button className="btn btn-outline z-10 btn-primary flex items-center justify-center gap-2">
@@ -36,16 +36,22 @@ export function BookingsDialog({ currentUser, booking }: BookingsDialogProps) {
           </button>
         }
       >
-        <BookingSectionForm user={currentUser} booking={booking} setOpen={setOpen} />
+        <BookingSectionForm
+          key={booking?.id ?? "create"}
+          booking={booking}
+          setOpen={setOpen}
+          onSaved={onSaved}
+        />
       </DiaDrawer>
     </ClientOnly>
   );
 }
 interface DeleteBookingsDialogProps {
-  booking?: BookingsResponse;
+  booking?: LocalBookingRecord;
+  onDone?: () => void;
 }
 
-export function DeleteBookingsDialog({ booking }: DeleteBookingsDialogProps) {
+export function DeleteBookingsDialog({ booking, onDone }: DeleteBookingsDialogProps) {
   const [open, setOpen] = useState(false);
   const title = booking ? "Move Appointment" : "Book an appointment";
   if (!booking) return null;
@@ -70,7 +76,10 @@ export function DeleteBookingsDialog({ booking }: DeleteBookingsDialogProps) {
           </button>
         }
       >
-        <BookingCancelForm bookingId={booking.id} onSuccess={() => setOpen(false)} />
+        <BookingCancelForm bookingId={booking.id} onSuccess={() => {
+          setOpen(false);
+          onDone?.();
+        }} />
       </DiaDrawer>
     </ClientOnly>
   );
