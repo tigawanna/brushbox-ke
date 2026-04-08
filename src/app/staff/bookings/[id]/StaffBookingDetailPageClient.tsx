@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useLayoutEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
@@ -15,6 +16,36 @@ export function StaffBookingDetailPageClient() {
   const { bookings, loading, refresh } = useLocalBookings();
 
   const row = bookings.find((b) => b.id === id) ?? null;
+
+  useLayoutEffect(() => {
+    const prev = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    return () => {
+      window.history.scrollRestoration = prev;
+    };
+  }, []);
+
+  useEffect(() => {
+    const scrollTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+    scrollTop();
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      scrollTop();
+      raf2 = requestAnimationFrame(scrollTop);
+    });
+    const t0 = window.setTimeout(scrollTop, 0);
+    const t1 = window.setTimeout(scrollTop, 100);
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      window.clearTimeout(t0);
+      window.clearTimeout(t1);
+    };
+  }, [id, loading]);
 
   if (loading) {
     return (

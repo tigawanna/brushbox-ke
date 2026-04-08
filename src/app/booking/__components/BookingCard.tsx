@@ -1,18 +1,13 @@
-import type { LocalBookingRecord, LocalCustomerBookingStatus } from "@/types/local-booking";
+import type { LocalBookingRecord } from "@/types/local-booking";
 import { formatDistance } from "date-fns";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, Phone, Sparkles, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { customerStatusLabel } from "@/lib/customer-booking-status";
 
 interface BookingCardProps {
   booking: LocalBookingRecord;
-}
-
-function customerStatusLabel(status: LocalCustomerBookingStatus): string {
-  if (status === "canceled") return "Canceled";
-  if (status === "rescheduled") return "Rescheduled";
-  return "Active";
 }
 
 export function BookingCard({ booking }: BookingCardProps) {

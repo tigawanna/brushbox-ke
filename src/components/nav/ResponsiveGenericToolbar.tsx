@@ -4,6 +4,7 @@ import { DesktopNav, MobileNav } from "./Navbars";
 import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/dist/client/components/navigation";
 interface ResponsiveGenericToolbarProps {
   children: React.ReactNode;
   isHomePage?: boolean;
@@ -33,6 +34,7 @@ export function ResponsiveGenericToolbar({
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <div className="drawer " data-test="sidebar-drawer">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />

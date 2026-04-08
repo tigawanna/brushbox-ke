@@ -1,19 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import { ResponsiveGenericToolbar } from "@/components/nav/ResponsiveGenericToolbar";
-import { BookingCard } from "./__components/BookingCard";
-import { BookingsDialog, DeleteBookingsDialog } from "./__components/BookingsDialog";
+import { BookingsDialog } from "./__components/BookingsDialog";
+import { CustomerBookingsCalendarPanel } from "./__components/CustomerBookingsCalendarPanel";
+import { CustomerBookingsList } from "./__components/CustomerBookingsList";
 import { useLocalBookings } from "@/hooks/common/use-local-bookings";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar } from "lucide-react";
-import { motion } from "motion/react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar as CalendarTabIcon, List, Calendar } from "lucide-react";
+import type { CustomerBookingBrowseTab } from "@/types/booking-dashboard";
 
 const demoLocalNote = "Demo version: data stays in this browser only.";
 
 export function BookingPageClient() {
   const { bookings, loading, refresh } = useLocalBookings();
+  const [browseTab, setBrowseTab] = useState<CustomerBookingBrowseTab>("list");
 
   if (loading) {
     return (
@@ -126,23 +130,42 @@ export function BookingPageClient() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-8 md:gap-10">
-            {bookings.map((booking, index) => (
-              <motion.div
-                key={booking.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                className="flex flex-col gap-4"
-              >
-                <div className="flex flex-wrap justify-end gap-3">
-                  <DeleteBookingsDialog booking={booking} onDone={refresh} />
-                  <BookingsDialog booking={booking} onSaved={refresh} />
-                </div>
-                <BookingCard booking={booking} />
-              </motion.div>
-            ))}
+          <div className="mt-10 md:mt-12">
+            <Tabs
+              value={browseTab}
+              onValueChange={(v) => setBrowseTab(v as CustomerBookingBrowseTab)}
+              className="gap-6"
+            >
+              <TabsList className="h-auto w-full flex-wrap justify-start gap-1 rounded-xl border border-primary/15 bg-base-200/60 p-1.5">
+                <TabsTrigger
+                  value="list"
+                  className="gap-2 rounded-lg font-sans data-[state=active]:bg-primary/15 data-[state=active]:text-primary data-[state=active]:shadow-none"
+                >
+                  <List className="h-4 w-4" aria-hidden />
+                  List
+                </TabsTrigger>
+                <TabsTrigger
+                  value="calendar"
+                  className="gap-2 rounded-lg font-sans data-[state=active]:bg-primary/15 data-[state=active]:text-primary data-[state=active]:shadow-none"
+                >
+                  <CalendarTabIcon className="h-4 w-4" aria-hidden />
+                  Calendar
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="list" className="mt-0 outline-none">
+                <CustomerBookingsList bookings={bookings} onSaved={refresh} />
+              </TabsContent>
+
+              <TabsContent value="calendar" className="mt-0 outline-none">
+                <CustomerBookingsCalendarPanel bookings={bookings} onSaved={refresh} />
+              </TabsContent>
+            </Tabs>
           </div>
+
+          <p className="mt-8 font-sans text-sm text-base-content/55">
+            Use the list for a compact overview, or the calendar to see which days you have visits.
+          </p>
         </div>
       </div>
     </ResponsiveGenericToolbar>

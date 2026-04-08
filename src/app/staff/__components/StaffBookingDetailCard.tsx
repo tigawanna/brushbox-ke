@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { useForm, useFormState } from "react-hook-form";
+import { useLayoutEffect } from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCustomMutation } from "@/hooks/use-cutom-mutation";
 import { makeHotToast } from "@/components/shared/toasters";
@@ -69,18 +69,27 @@ export function StaffBookingDetailCard({ row, onSaved }: StaffBookingDetailCardP
   const form = useForm<StaffBookingFormValues>({
     resolver: zodResolver(staffBookingFormSchema),
     defaultValues: {
-      staff_notes: row.staff_notes,
+      staff_notes: row.staff_notes ?? "",
       staff_status: row.staff_status,
     },
+    mode: "onChange",
   });
 
-  const { isDirty } = useFormState({ control: form.control });
+  const watchedNotes = form.watch("staff_notes");
+  const watchedStatus = form.watch("staff_status");
+  const baselineNotes = row.staff_notes ?? "";
+  const baselineStatus = row.staff_status ?? "new";
+  const isDirty =
+    watchedNotes !== baselineNotes || watchedStatus !== baselineStatus;
 
-  useEffect(() => {
-    form.reset({
-      staff_notes: row.staff_notes,
-      staff_status: row.staff_status,
-    });
+  useLayoutEffect(() => {
+    form.reset(
+      {
+        staff_notes: row.staff_notes ?? "",
+        staff_status: row.staff_status,
+      },
+      { keepDirty: false },
+    );
   }, [row.id, row.staff_notes, row.staff_status, form]);
 
   const { isPending, mutate } = useCustomMutation({
