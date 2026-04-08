@@ -5,5 +5,5 @@
 - prefer named export from compoments unlss if deafult export is necessary
 - we are using typescript and all function inputs should have type annotations
 - we're using react with nextjs and react server copnets where possible
-- the backend / cms is pocketbase with tyed pocketbse
+- bookings demo data uses the browser (IndexedDB), not a remote API
 - do not use framer motion in server components especialy in root pages it requires a "use client" directive and it' not best practie to put it at the page level

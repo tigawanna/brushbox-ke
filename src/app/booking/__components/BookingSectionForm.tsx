@@ -18,7 +18,7 @@ import { useCustomMutation } from "@/hooks/use-cutom-mutation";
 import { Loader, X } from "lucide-react";
 import { makeHotToast } from "@/components/shared/toasters";
 import { MultiSelect } from "@/components/ui/multi-select";
-import { formatPBDate } from "@/lib/pb/utils";
+import { formatStoredBookingDate } from "@/lib/format-stored-booking-date";
 import { MultiImagePicker } from "@/components/shared/MultiImagePicker";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
@@ -118,7 +118,7 @@ export function BookingSectionForm({ booking, setOpen, onSaved }: BookingSection
         preferred_name: values.preferred_name,
         phone: values.phone,
         services: values.services,
-        preferred_date: formatPBDate(values.preferred_date),
+        preferred_date: formatStoredBookingDate(values.preferred_date),
         special_requests: values.special_requests ?? "",
         reference_image_data_urls,
         status: "" as const,

@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { useCustomMutation } from "@/hooks/use-cutom-mutation";
 import { makeHotToast } from "@/components/shared/toasters";
 import { ChevronRight, Loader, Trash, History, Save, CheckCheck } from "lucide-react";
-import { formatPBDate } from "@/lib/pb/utils";
+import { formatStoredBookingDate } from "@/lib/format-stored-booking-date";
 import { updateLocalBooking } from "@/services/bookings/bookings.idb";
 import { BookingDateTimeField } from "./BookingDateTimeField";
 import {
@@ -68,7 +68,7 @@ export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormPro
       className="card w-full max-w-md bg-base-100 shadow-xl p-2"
     >
       {!action ? (
-        <div className="flex flex gap-3 justify-evenly">
+        <div className="flex gap-3 justify-evenly">
           <button
             onClick={() => setAction("cancel")}
             className="btn btn-error text-error bg-error/10  border-[1px]"
@@ -104,7 +104,7 @@ export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormPro
                   <button
                     onClick={() => {
                       mutate({
-                        variables: { action, rescheduleTo: formatPBDate(rescheduleDate) },
+                        variables: { action, rescheduleTo: formatStoredBookingDate(rescheduleDate) },
                       });
                     }}
                     className={`btn btn-warning border-[1px] btn-outline `}

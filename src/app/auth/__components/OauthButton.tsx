@@ -1,43 +1,24 @@
 "use client";
-import { clientPB } from "@/lib/pb/client";
-import { Loader } from "lucide-react";
-import { useRouter } from "next/navigation";
 
-import { useTransition } from "react";
-import { FaGoogle } from "react-icons/fa";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface OauthButtonProps {
   returnTo: string;
 }
 
 export function OauthButton({ returnTo }: OauthButtonProps) {
-  const router = useRouter();
-  const [pending, startTransition] = useTransition();
-  const signInuser = async () => {
-    await clientPB
-      .from("users")
-      .authWithOAuth2({
-        provider: "google",
-      })
-      .then((res) => {
-        if (res) {
-          document.cookie = `pb_auth=${JSON.stringify(res)}; path=/; max-age=31536000; SameSite=None; Secure`;
-        }
-        router.push(returnTo);
-      });
-  };
-
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center gap-5">
-      <button
-        disabled={pending}
-        className="btn btn-wide btn-accent btn-outline w-full h-12"
-        onClick={() => startTransition(() => signInuser())}
+    <div className="flex w-full flex-col items-center justify-center gap-4">
+      <p className="text-center font-sans text-sm text-base-content/70">
+        Bookings are stored in this browser only. No account is required for the demo.
+      </p>
+      <Button
+        asChild
+        className="btn btn-wide h-12 w-full border-primary/40 bg-primary/15 font-sans font-semibold text-primary shadow-none hover:bg-primary/25"
       >
-        <FaGoogle className="size-7" />
-        Sign in with Google
-        {pending && <Loader className="animate-spin size-7" />}
-      </button>
+        <Link href={returnTo}>Continue</Link>
+      </Button>
     </div>
   );
 }
