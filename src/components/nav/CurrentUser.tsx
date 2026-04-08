@@ -16,12 +16,18 @@ export function BookAppointment() {
 
 export function CurrentUser() {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
+      <span
+        className="text-[10px] font-semibold uppercase tracking-[0.18em] text-warning/90 border border-warning/35 rounded-full px-2.5 py-1 bg-warning/5"
+        title="Bookings and staff tools run in your browser for this demo."
+      >
+        Local demo
+      </span>
       <Link
         href="/staff"
         className="text-sm font-medium text-primary hover:text-accent underline-offset-4 hover:underline"
       >
-        Staff
+        Preview staff
       </Link>
     </div>
   );

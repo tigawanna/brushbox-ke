@@ -6,6 +6,7 @@ import { useState } from "react";
 import type { LocalBookingRecord } from "@/types/local-booking";
 import { ClientOnly } from "@/lib/nextjs/ClientOnly";
 import { BookingCancelForm } from "./BookingCancleForm";
+import { Button } from "@/components/ui/button";
 
 interface BookingsDialogProps {
   booking?: LocalBookingRecord;
@@ -18,13 +19,13 @@ export function BookingsDialog({ booking, onSaved }: BookingsDialogProps) {
   return (
     <ClientOnly
       fallback={
-        <button
+        <Button
           type="button"
-          className="btn z-20 btn-primary shadow-md shadow-primary/15 flex items-center justify-center gap-2 min-w-[12rem]"
+          className="rounded-full border border-primary/40 bg-primary/15 px-6 font-sans font-semibold text-primary shadow-none hover:bg-primary/25"
         >
           <Plus className="h-4 w-4" aria-hidden />
           {title}
-        </button>
+        </Button>
       }
     >
       <DiaDrawer
@@ -33,13 +34,13 @@ export function BookingsDialog({ booking, onSaved }: BookingsDialogProps) {
         title={title}
         description="schedule your appointment with us"
         trigger={
-          <button
+          <Button
             type="button"
-            className="btn z-10 btn-primary shadow-md shadow-primary/15 flex items-center justify-center gap-2 min-w-[12rem]"
+            className="rounded-full border border-primary/40 bg-primary/15 px-6 font-sans font-semibold text-primary shadow-none hover:bg-primary/25"
           >
             <Plus className="h-4 w-4" aria-hidden />
             {title}
-          </button>
+          </Button>
         }
       >
         <BookingSectionForm
@@ -64,13 +65,14 @@ export function DeleteBookingsDialog({ booking, onDone }: DeleteBookingsDialogPr
   return (
     <ClientOnly
       fallback={
-        <button
+        <Button
           type="button"
-          className="btn z-20 btn-outline border-warning/45 text-warning hover:bg-warning/10 hover:border-warning/60 flex items-center justify-center gap-2"
+          variant="outline"
+          className="rounded-full border-warning/45 bg-transparent px-6 font-sans font-semibold text-warning shadow-none hover:bg-warning/10 hover:text-warning"
         >
           <PenOff className="h-4 w-4" aria-hidden />
           {title}
-        </button>
+        </Button>
       }
     >
       <DiaDrawer
@@ -79,19 +81,23 @@ export function DeleteBookingsDialog({ booking, onDone }: DeleteBookingsDialogPr
         title={title}
         description="schedule your appointment with us"
         trigger={
-          <button
+          <Button
             type="button"
-            className="btn z-10 btn-outline border-warning/45 text-warning hover:bg-warning/10 hover:border-warning/60 flex items-center justify-center gap-2"
+            variant="outline"
+            className="rounded-full border-warning/45 bg-transparent px-6 font-sans font-semibold text-warning shadow-none hover:bg-warning/10 hover:text-warning"
           >
             <PenOff className="h-4 w-4" aria-hidden />
             {title}
-          </button>
+          </Button>
         }
       >
-        <BookingCancelForm bookingId={booking.id} onSuccess={() => {
-          setOpen(false);
-          onDone?.();
-        }} />
+        <BookingCancelForm
+          bookingId={booking.id}
+          onSuccess={() => {
+            setOpen(false);
+            onDone?.();
+          }}
+        />
       </DiaDrawer>
     </ClientOnly>
   );

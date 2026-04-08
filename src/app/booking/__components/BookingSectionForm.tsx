@@ -28,20 +28,14 @@ import {
   fileToDataUrl,
   updateLocalBooking,
 } from "@/services/bookings/bookings.idb";
-
-function toDatetimeLocalInput(date: Date): string {
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-}
-
-function preferredDateForInput(stored: string): string {
-  const normalized = stored.includes("T") ? stored : stored.replace(" ", "T");
-  const d = new Date(normalized);
-  if (Number.isNaN(d.getTime())) {
-    return toDatetimeLocalInput(new Date());
-  }
-  return toDatetimeLocalInput(d);
-}
+import { BookingDateTimeField } from "./BookingDateTimeField";
+import {
+  datetimeLocalFromStoredBooking,
+  getNextAvailableSlot,
+  isBookingDateTimeAllowed,
+  parseDatetimeLocalInput,
+  toDatetimeLocalInput,
+} from "@/data/salon-hours";
 
 const servicesList = [
   "hair",
@@ -56,7 +50,12 @@ const bookingFormSchema = z.object({
   preferred_name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   phone: z.string().min(10, { message: "Please enter a valid phone number." }),
   services: z.array(z.enum(servicesList)),
-  preferred_date: z.coerce.string().min(1, { message: "Please select a date and time." }),
+  preferred_date: z
+    .string()
+    .min(1, { message: "Please select a date and time." })
+    .refine((s) => isBookingDateTimeAllowed(parseDatetimeLocalInput(s)), {
+      message: "Choose an available time during opening hours.",
+    }),
   special_requests: z.string().optional(),
   references: z.array(z.instanceof(File)).optional(),
 });
@@ -101,8 +100,8 @@ export function BookingSectionForm({ booking, setOpen, onSaved }: BookingSection
       phone: booking?.phone ?? "",
       services: booking?.services ?? [],
       preferred_date: booking?.preferred_date
-        ? preferredDateForInput(booking.preferred_date)
-        : toDatetimeLocalInput(new Date()),
+        ? datetimeLocalFromStoredBooking(booking.preferred_date)
+        : toDatetimeLocalInput(getNextAvailableSlot()),
       special_requests: booking?.special_requests ?? "",
       references: [],
     },
@@ -141,7 +140,7 @@ export function BookingSectionForm({ booking, setOpen, onSaved }: BookingSection
         preferred_name: "",
         phone: "",
         services: [],
-        preferred_date: toDatetimeLocalInput(new Date()),
+        preferred_date: toDatetimeLocalInput(getNextAvailableSlot()),
         special_requests: "",
         references: [],
       });
@@ -255,11 +254,7 @@ export function BookingSectionForm({ booking, setOpen, onSaved }: BookingSection
                   Preferred Date & Time
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    type="datetime-local"
-                    className="bg-base-200 border-primary/30 focus:border-primary"
-                    {...field}
-                  />
+                  <BookingDateTimeField value={field.value} onChange={field.onChange} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -1,4 +1,5 @@
 import { BookAppointment } from "../nav/CurrentUser";
+import { SALON_HOURS_DISPLAY_LINES } from "@/data/salon-hours";
 
 export function BookingSection() {
   return (
@@ -68,9 +69,11 @@ export function BookingSection() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg mb-1">Opening Hours</h4>
-                  <p className="/70">Monday - Friday: 9:00 AM - 8:00 PM</p>
-                  <p className="/70">Saturday: 9:00 AM - 6:00 PM</p>
-                  <p className="/70">Sunday: 11:00 AM - 4:00 PM</p>
+                  {SALON_HOURS_DISPLAY_LINES.map((line) => (
+                    <p key={line} className="/70">
+                      {line}
+                    </p>
+                  ))}
                 </div>
               </div>
 

@@ -3,9 +3,15 @@ import { motion } from "motion/react";
 import { useCustomMutation } from "@/hooks/use-cutom-mutation";
 import { makeHotToast } from "@/components/shared/toasters";
 import { ChevronRight, Loader, Trash, History, Save, CheckCheck } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { formatPBDate } from "@/lib/pb/utils";
 import { updateLocalBooking } from "@/services/bookings/bookings.idb";
+import { BookingDateTimeField } from "./BookingDateTimeField";
+import {
+  getNextAvailableSlot,
+  isBookingDateTimeAllowed,
+  parseDatetimeLocalInput,
+  toDatetimeLocalInput,
+} from "@/data/salon-hours";
 
 interface BookingCancelFormProps {
   bookingId: string;
@@ -15,10 +21,10 @@ interface BookingCancelFormProps {
 
 export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormProps) {
   const [action, setAction] = useState<"cancel" | "reschedule" | null>(null);
-  const [rescheduleDate, setRescheduleDate] = useState<string>(new Date().toISOString());
-  const isRescheduleDatGraeterThanRightNow = rescheduleDate
-    ? new Date(rescheduleDate) > new Date()
-    : false;
+  const [rescheduleDate, setRescheduleDate] = useState<string>(
+    () => toDatetimeLocalInput(getNextAvailableSlot()),
+  );
+  const rescheduleValid = isBookingDateTimeAllowed(parseDatetimeLocalInput(rescheduleDate));
 
   const { mutate, isPending } = useCustomMutation({
     mutationFn: async ({
@@ -93,13 +99,8 @@ export function BookingCancelForm({ bookingId, onSuccess }: BookingCancelFormPro
           <div className="flex flex-wrap gap-3 justify-between">
             {action === "reschedule" ? (
               <div className="flex flex-wrap justify-between gap-6 w-full">
-                <Input
-                  type="datetime-local"
-                  className="bg-base-200 border-primary/30 focus:border-primary"
-                  value={rescheduleDate}
-                  onChange={(e) => setRescheduleDate(e.target.value)}
-                />
-                {isRescheduleDatGraeterThanRightNow && (
+                <BookingDateTimeField value={rescheduleDate} onChange={setRescheduleDate} />
+                {rescheduleValid && (
                   <button
                     onClick={() => {
                       mutate({
