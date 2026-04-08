@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://example.com</loc><lastmod>2026-04-08T15:16:53.274Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://example.com/apple-icon.png</loc><lastmod>2026-04-08T15:16:53.274Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://example.com/booking</loc><lastmod>2026-04-08T15:16:53.274Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://example.com/dashboard</loc><lastmod>2026-04-08T15:16:53.274Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://example.com/icon0.svg</loc><lastmod>2026-04-08T15:16:53.274Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://example.com/icon1.png</loc><lastmod>2026-04-08T15:16:53.274Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://example.com/manifest.json</loc><lastmod>2026-04-08T15:16:53.274Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://example.com/opengraph-image.jpg</loc><lastmod>2026-04-08T15:16:53.274Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://example.com/shop</loc><lastmod>2026-04-08T15:16:53.274Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://example.com/staff</loc><lastmod>2026-04-08T15:16:53.274Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://example.com</loc><lastmod>2026-04-08T15:23:32.376Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://example.com/apple-icon.png</loc><lastmod>2026-04-08T15:23:32.377Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://example.com/booking</loc><lastmod>2026-04-08T15:23:32.377Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://example.com/dashboard</loc><lastmod>2026-04-08T15:23:32.377Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://example.com/icon0.svg</loc><lastmod>2026-04-08T15:23:32.377Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://example.com/icon1.png</loc><lastmod>2026-04-08T15:23:32.377Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://example.com/manifest.json</loc><lastmod>2026-04-08T15:23:32.377Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://example.com/opengraph-image.jpg</loc><lastmod>2026-04-08T15:23:32.377Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://example.com/shop</loc><lastmod>2026-04-08T15:23:32.377Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://example.com/staff</loc><lastmod>2026-04-08T15:23:32.377Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>
